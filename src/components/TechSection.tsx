@@ -33,38 +33,37 @@ export const TechSection: React.FC = () => {
     },
     {
       number: '02',
-      title: 'YAPAY ZEKA & ÜRETKEN MEDYA (AI TOOLS)',
+      title: 'YAPAY ZEKA & MEDYA ARAÇLARI',
       items: [
-        { name: 'AI Video Üretimi (Runway / Kling / Luma / Pika)', highlight: true },
+        { name: 'AI Video (Runway / Kling / Luma)', highlight: true },
         { name: 'Görsel Üretimi (Midjourney / DALL-E)', highlight: true },
-        { name: 'Prompt Mühendisliği', highlight: true },
-        { name: 'Ses Sentezleme & Dublaj (ElevenLabs)', highlight: true },
-        { name: 'LLM & AI API Entegrasyonu (OpenAI, Claude, Gemini)', highlight: true },
-        { name: 'AI Destekli Kodlama (Cursor, Copilot)' },
+        { name: 'Prompt Hazırlama', highlight: true },
+        { name: 'Ses Sentezi (ElevenLabs)', highlight: true },
+        { name: 'AI API Entegrasyonu (OpenAI, Claude, Gemini)', highlight: true },
+        { name: 'AI Kodlama Araçları (Cursor, Copilot)' },
       ],
     },
     {
       number: '03',
-      title: 'TEKNİK BECERİLER & ANALİZ',
+      title: 'YAZILIM BECERİLERİ',
       items: [
         { name: 'iOS Uygulama Geliştirme', highlight: true },
         { name: 'Algoritma Tasarımı' },
         { name: 'Mantıksal Analiz & Optimizasyon' },
-        { name: 'Veri Analizi ve Yorumlama' },
-        { name: 'Donanım & Bilişim Bilgisi' },
+        { name: 'Veri Yapıları' },
         { name: 'Web Tasarımı' },
         { name: 'Sosyal Medya Yönetimi' },
       ],
     },
     {
       number: '04',
-      title: 'ÇALIŞMA DİNAMİKLERİ & YETKİNLİKLER',
+      title: 'ÇALIŞMA YETKİNLİKLERİ',
       items: [
-        { name: 'Hızlı Öğrenme ve Adaptasyon' },
+        { name: 'Hızlı Öğrenme ve Araştırma' },
         { name: 'Problem Çözme' },
-        { name: 'Ekip Çalışmasına Uyum' },
-        { name: 'Zaman ve Stres Yönetimi' },
-        { name: 'Sorumluluk Alma & Liderlik' },
+        { name: 'Ekip Çalışması' },
+        { name: 'Zaman Yönetimi' },
+        { name: 'Sorumluluk Alma' },
       ],
     },
     {
@@ -84,7 +83,7 @@ export const TechSection: React.FC = () => {
         {/* Section Header */}
         <div className="mb-4">
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-            BECERİLER, YAPAY ZEKA & TEKNOLOJİLER
+            BECERİLER & TEKNOLOJİLER
           </span>
         </div>
 
