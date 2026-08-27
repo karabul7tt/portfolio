@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroShield | Otonom Termal Drone Sürüsü Yangın Erken Müdahale Sistemi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        tactical: {
+                            900: '#07090e',
+                            800: '#0b0f19',
+                            700: '#141c2e',
+                            border: '#1e293b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="src/styles.css">
+</head>
+<body class="bg-[#07090e] text-slate-200 h-screen w-screen flex flex-col select-none overflow-hidden font-mono">
+
+    <!-- TOP GCS NAVIGATION & STATS TICKER -->
+    <header class="h-14 bg-[#0b0f19] border-b border-slate-800 px-4 flex items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-sky-950 border border-sky-500/50 flex items-center justify-center text-sky-400 font-bold text-base shadow-sm shadow-sky-500/20">
+                🛸
+            </div>
+            <div>
+                <h1 class="font-bold text-sm text-sky-400 tracking-wider flex items-center gap-2">
+                    AEROSHIELD GCS <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">V2.4 MESH ACTIVE</span>
+                </h1>
+                <p class="text-[10px] text-slate-400">Otonom Termal Drone Sürüsü & Orman Yangını Erken Tespit Sistemi</p>
+            </div>
+        </div>
+
+        <!-- REALTIME STATUS & METRICS -->
+        <div class="flex items-center gap-4">
+            <div id="alertBanner" class="flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-700/60 rounded text-emerald-400 text-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> ALAN GÜVENLİ (DEVRİYE AKTİF)
+            </div>
+
+            <div class="hidden lg:flex items-center gap-5 text-xs bg-slate-950/80 px-4 py-1.5 rounded border border-slate-800">
+                <div class="flex flex-col">
+                    <span class="text-[9px] text-slate-500 uppercase font-semibold">Aktif Yangın</span>
+                    <span id="statBurning" class="text-rose-400 font-bold text-sm">0</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[9px] text-slate-500 uppercase font-semibold">Isı Anomalisi</span>
+                    <span id="statAnomalies" class="text-amber-400 font-bold text-sm">0</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[9px] text-slate-500 uppercase font-semibold">Söndürülen Odak</span>
+                    <span id="statExtinguished" class="text-emerald-400 font-bold text-sm">0</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[9px] text-slate-500 uppercase font-semibold">Atılan Kapsül</span>
+                    <span id="statCapsules" class="text-sky-400 font-bold text-sm">0</span>
+                </div>
+                <div class="w-px h-6 bg-slate-800"></div>
+                <div class="flex flex-col">
+                    <span class="text-[9px] text-slate-500 uppercase font-semibold">Kayıp Orman</span>
+                    <span id="statBurnt" class="text-slate-400 font-bold text-sm">0.0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button id="btnToggleMapView" class="text-xs px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded border border-slate-700 transition">
+                🗺️ Termal Harita Moduna Geç
+            </button>
+            <button id="btnMute" class="text-xs px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+                🔊 Ses: Açık
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <div class="flex-1 flex overflow-hidden">
+
+        <!-- LEFT SIDEBAR: CONTROLS & ENVIRONMENT -->
+        <aside class="w-72 bg-[#0b0f19] border-r border-slate-800 flex flex-col justify-between p-3 gap-3 overflow-y-auto shrink-0 z-10 text-xs">
+
+            <!-- INTERACTION TOOLS -->
+            <div class="space-y-2">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase flex items-center justify-between">
+                    <span>Harita Etkileşimi</span>
+                    <span class="text-[9px] text-sky-400">Tıklama Aracı</span>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5">
+                    <button id="toolEmber" class="tool-btn w-full text-left px-2.5 py-2 rounded border border-sky-400 bg-sky-950/60 text-sky-300 font-semibold flex items-center justify-between">
+                        <span>⚠️ Köz / Isı Anomalisi ($80^\circ\text{C}$)</span>
+                        <span class="text-[10px] text-amber-400">Erken Faz</span>
+                    </button>
+                    <button id="toolWildfire" class="tool-btn w-full text-left px-2.5 py-2 rounded border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700 flex items-center justify-between">
+                        <span>🔥 Alevli Yangın ($600^\circ\text{C}$)</span>
+                        <span class="text-[10px] text-rose-400">Gelişmiş</span>
+                    </button>
+                    <button id="toolExtinguish" class="tool-btn w-full text-left px-2.5 py-2 rounded border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700 flex items-center justify-between">
+                        <span>💧 Manuel Söndürme / Soğutma</span>
+                        <span class="text-[10px] text-sky-400">Köpük</span>
+                    </button>
+                </div>
+                <button id="btnRandomFire" class="w-full py-2 bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-500 hover:to-rose-500 text-white font-bold rounded shadow-md text-xs transition">
+                    ⚡ Rastgele Yangın Başlat
+                </button>
+            </div>
+
+            <!-- ENVIRONMENTAL & WEATHER MODEL -->
+            <div class="space-y-2.5 p-2.5 rounded bg-slate-950/60 border border-slate-800">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase flex items-center justify-between">
+                    <span>Çevre & Hava Koşulları</span>
+                    <div class="w-5 h-5 rounded-full border border-slate-700 flex items-center justify-center">
+                        <div id="windCompassArrow" class="text-sky-400 text-xs transition-transform duration-150">➤</div>
+                    </div>
+                </div>
+
+                <!-- Wind Speed -->
+                <div>
+                    <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                        <span>Rüzgar Hızı</span>
+                        <span id="windSpeedVal" class="text-sky-300 font-mono">18 km/h</span>
+                    </div>
+                    <input id="windSpeedSlider" type="range" min="0" max="60" value="18" class="w-full accent-sky-400 h-1.5 bg-slate-800 rounded">
+                </div>
+
+                <!-- Wind Angle -->
+                <div>
+                    <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                        <span>Rüzgar Yönü</span>
+                        <span id="windDirVal" class="text-sky-300 font-mono">45°</span>
+                    </div>
+                    <input id="windDirSlider" type="range" min="0" max="360" value="45" class="w-full accent-sky-400 h-1.5 bg-slate-800 rounded">
+                </div>
+
+                <!-- Ambient Temp -->
+                <div>
+                    <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                        <span>Ortam Sıcaklığı</span>
+                        <span id="tempVal" class="text-amber-400 font-mono">28°C</span>
+                    </div>
+                    <input id="tempSlider" type="range" min="15" max="48" value="28" class="w-full accent-amber-400 h-1.5 bg-slate-800 rounded">
+                </div>
+
+                <!-- Humidity -->
+                <div>
+                    <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                        <span>Nem Oranı</span>
+                        <span id="humidityVal" class="text-emerald-400 font-mono">%35</span>
+                    </div>
+                    <input id="humiditySlider" type="range" min="10" max="90" value="35" class="w-full accent-emerald-400 h-1.5 bg-slate-800 rounded">
+                </div>
+            </div>
+
+            <!-- SWARM MISSION ACTIONS -->
+            <div class="space-y-1.5">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase">Sürü Görev Komutları</div>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button id="btnSwarmPatrol" class="px-2 py-2 bg-sky-950 hover:bg-sky-900 border border-sky-600/50 text-sky-300 rounded font-semibold text-center transition">
+                        🛰️ Voronoi Devriye
+                    </button>
+                    <button id="btnSwarmRTB" class="px-2 py-2 bg-slate-900 hover:bg-slate-800 border border-indigo-500/40 text-indigo-300 rounded font-semibold text-center transition">
+                        🏠 Filo Üsse Dön (RTB)
+                    </button>
+                </div>
+                <button id="btnReset" class="w-full py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-400 rounded text-center transition">
+                    🔄 Haritayı & Sürüyü Sıfırla
+                </button>
+            </div>
+
+            <!-- FOOTER INFO -->
+            <div class="text-[10px] text-slate-500 border-t border-slate-800/80 pt-2 flex justify-between">
+                <span>Konum: Ege / Akdeniz Ormanı</span>
+                <span>GPS: 38.35°N, 27.18°E</span>
+            </div>
+        </aside>
+
+        <!-- CENTER: MAIN SIMULATION RADAR/MAP CANVAS -->
+        <main class="flex-1 flex flex-col relative bg-[#07090e] overflow-hidden">
+            <!-- CANVAS -->
+            <div class="flex-1 w-full h-full relative cursor-crosshair">
+                <canvas id="mainCanvas" class="w-full h-full block"></canvas>
+
+                <!-- MAP HUD OVERLAY ELEMENTS -->
+                <div class="absolute top-3 left-3 pointer-events-none flex flex-col gap-1 text-[10px] text-sky-400/80 bg-slate-950/70 p-2 rounded border border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
+                        <span>RADAR COVERAGE: VORONOI ACTIVE</span>
+                    </div>
+                    <div>SEKTÖR KAPSAMA: %100 | MESH DÜĞÜM: 5/5</div>
+                </div>
+
+                <div class="absolute bottom-3 left-3 pointer-events-none text-[10px] text-slate-500 bg-slate-950/70 px-2 py-1 rounded border border-slate-800">
+                    ÖLÇEK: 1:5000 | 1 HÜCRE = 10m x 10m
+                </div>
+            </div>
+
+            <!-- BOTTOM SIMULATION TIME CONTROL BAR -->
+            <div class="h-10 bg-[#0b0f19] border-t border-slate-800 px-4 flex items-center justify-between text-xs shrink-0">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-400 text-[11px]">Hız:</span>
+                    <button id="btnSpeed1x" class="px-2.5 py-0.5 rounded bg-sky-600 text-white font-bold">1x</button>
+                    <button id="btnSpeed2x" class="px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">2x</button>
+                    <button id="btnPause" class="px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">⏸️ Duraklat</button>
+                </div>
+
+                <div class="text-[11px] text-slate-400 hidden sm:block">
+                    💡 İpucu: Harita üzerine tıklayarak yangın veya köz oluşturabilir, drone'ları tıklayarak seçebilirsiniz.
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR: DRONE THERMAL FEED, TELEMETRY & INCIDENT LOG -->
+        <aside class="w-96 bg-[#0b0f19] border-l border-slate-800 flex flex-col p-3 gap-3 overflow-y-auto shrink-0 z-10">
+
+            <!-- DRONE LIVE THERMAL CAMERA & HUD -->
+            <div class="space-y-1.5">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase flex items-center justify-between">
+                    <span>Termal Görüş & Edge AI (FLIR)</span>
+                    <span class="text-[9px] text-rose-400 animate-pulse">● CANLI YAYIN</span>
+                </div>
+
+                <div class="relative rounded overflow-hidden border border-sky-500/30 bg-black aspect-[16/10] shadow-md">
+                    <canvas id="hudCanvas" class="w-full h-full block"></canvas>
+                </div>
+
+                <!-- PALETTE BUTTONS -->
+                <div class="flex items-center gap-1 text-[10px]">
+                    <span class="text-slate-500 mr-1">Palet:</span>
+                    <button id="pal_IRONBOW" class="pal-btn px-2 py-0.5 rounded bg-sky-600 text-white font-semibold border border-slate-700">Ironbow</button>
+                    <button id="pal_WHITE_HOT" class="pal-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">White-Hot</button>
+                    <button id="pal_RAINBOW" class="pal-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Rainbow</button>
+                    <button id="pal_BLACK_HOT" class="pal-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Black-Hot</button>
+                </div>
+            </div>
+
+            <!-- FLEET TELEMETRY CARDS -->
+            <div class="space-y-1.5 flex-1 min-h-[190px]">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase flex items-center justify-between">
+                    <span>Sürü Filosu Telemetrisi</span>
+                    <span class="text-[9px] text-sky-400">5 Düğüm</span>
+                </div>
+                <div id="droneCardsList" class="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+                    <!-- Populated dynamically via app.js -->
+                </div>
+            </div>
+
+            <!-- INCIDENT / ALARM EVENT LOGS -->
+            <div class="space-y-1.5 flex-1 min-h-[160px] border-t border-slate-800 pt-2 flex flex-col">
+                <div class="text-[11px] font-bold text-slate-400 tracking-wider uppercase flex items-center justify-between">
+                    <span>Erken İhbar & Olay Günlüğü</span>
+                    <span class="text-[9px] text-amber-400">Mesh Log</span>
+                </div>
+                <div id="incidentLogsList" class="flex-1 bg-slate-950/70 border border-slate-800/80 rounded p-2 overflow-y-auto max-h-44 text-[11px]">
+                    <!-- Populated dynamically via app.js -->
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
+    <script type="module" src="src/ui/app.js"></script>
+</body>
+</html>

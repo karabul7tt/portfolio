@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Sakura 3D</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #ffffff;
+  }
+  #canvas3d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    cursor: grab;
+  }
+  #canvas3d:active {
+    cursor: grabbing;
+  }
+  #webcamVideo {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 26vw;
+    max-width: 300px;
+    transform: scaleX(-1);
+    border-radius: 8px;
+    border: 1px solid rgba(244, 114, 182, 0.4);
+    z-index: 2;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    background: #111111;
+  }
+  #handOverlay {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 26vw;
+    max-width: 300px;
+    height: auto;
+    z-index: 3;
+    pointer-events: none;
+  }
+  #hud {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 10;
+    color: #f472b6;
+    font: 13px/1.6 monospace;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(244, 114, 182, 0.3);
+    white-space: pre;
+    user-select: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+  .hidden {
+    display: none !important;
+  }
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.0/examples/jsm/",
+    "animejs": "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.es.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<canvas id="canvas3d"></canvas>
+<video id="webcamVideo" autoplay muted playsinline></video>
+<canvas id="handOverlay"></canvas>
+<div id="hud">SAKURA 3D
+El Algilama: Yukleniyor...</div>
+
+<script type="module">
+import * as THREE from 'three';
+import anime from 'animejs';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass }     from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OrbitControls }   from 'three/addons/controls/OrbitControls.js';
+import { HandLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs';
+
+/* CONFIGURATION */
+const CONFIG = {
+  plant: {
+    trunkLength: 2.2,
+    spreadDeg: 46
+  },
+  flowers: {
+    floretsPerHead: 4,
+    petalCount: 6,
+    petalLength: 1.8,
+    petalWidth: 0.48,
+    recurveMax: 0.85,
+    rippleFreq: 6.0,
+    rippleAmp: 0.04
+  },
+  colors: {
+    throat: '#4c0519',
+    midrib: '#be123c',
+    edge: '#fda4af',
+    stamen: '#facc15',
+    stem: '#15803d'
+  },
+  glow: {
+    strength: 1.25,
+    radius: 0.4,
+    threshold: 0.75
+  }
+};
+
+/* SCENE SETUP */
+const canvas = document.getElementById('canvas3d');
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x000000, 0.03);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 7.5);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  alpha: false,
+  antialias: true,
+  powerPreference: 'high-performance'
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.3;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
+  CONFIG.glow.strength,
+  CONFIG.glow.radius,
+  CONFIG.glow.threshold
+);
+composer.addPass(bloomPass);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+scene.add(ambientLight);
+
+const keyLight = new THREE.DirectionalLight(0xffedd5, 1.8);
+keyLight.position.set(5, 10, 7);
+scene.add(keyLight);
+
+const rimLight = new THREE.DirectionalLight(0xbe123c, 1.2);
+rimLight.position.set(-6, -4, -4);
+scene.add(rimLight);
+
+/* ANIMATION TIMELINE ENGINE */
+const bloomState = {
+  lift: 0,
+  recurve: 0,
+  stamenExtend: 0
+};
+
+const bloomTimeline = anime.timeline({
+  autoplay: false,
+  easing: 'easeInOutCubic'
+});
+
+bloomTimeline
+  .add({
+    targets: bloomState,
+    lift: 1,
+    duration: 500
+  })
+  .add({
+    targets: bloomState,
+    recurve: 1,
+    duration: 700
+  }, '-=200')
+  .add({
+    targets: bloomState,
+    stamenExtend: 1,
+    duration: 600
+  }, '-=400');
+
+/* PROCEDURAL 3D GEOMETRY */
+const sakuraGroup = new THREE.Group();
+scene.add(sakuraGroup);
+
+function createPetalGeometry(length, width, recurveVal, liftVal) {
+  const geo = new THREE.PlaneGeometry(width, length, 16, 16);
+  const pos = geo.attributes.position;
+  const colors = [];
+
+  const cThroat = new THREE.Color(CONFIG.colors.throat);
+  const cMidrib = new THREE.Color(CONFIG.colors.midrib);
+  const cEdge   = new THREE.Color(CONFIG.colors.edge);
+
+  for (let i = 0; i < pos.count; i++) {
+    const y = pos.getY(i);
+    const x = pos.getX(i);
+    const normalizedY = (y + length / 2) / length;
+
+    const arch = -Math.pow(normalizedY, 2) * length * 0.4 * recurveVal;
+    const ripple = Math.sin(normalizedY * CONFIG.flowers.rippleFreq * Math.PI) * CONFIG.flowers.rippleAmp * (x > 0 ? 1 : -1);
+    pos.setZ(i, arch + ripple);
+
+    const col = cThroat.clone();
+    col.lerp(cMidrib, normalizedY * 0.7);
+    col.lerp(cEdge, Math.pow(normalizedY, 1.5));
+    colors.push(col.r, col.g, col.b);
+  }
+
+  geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  geo.computeVertexNormals();
+  return geo;
+}
+
+const petalMaterial = new THREE.MeshPhysicalMaterial({
+  vertexColors: true,
+  roughness: 0.18,
+  metalness: 0.05,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.1,
+  side: THREE.DoubleSide
+});
+
+function buildFloret() {
+  const floretGroup = new THREE.Group();
+  const petals = [];
+
+  for (let i = 0; i < CONFIG.flowers.petalCount; i++) {
+    const angle = (i * Math.PI * 2) / CONFIG.flowers.petalCount;
+    const geo = createPetalGeometry(CONFIG.flowers.petalLength, CONFIG.flowers.petalWidth, 0, 0);
+    const mesh = new THREE.Mesh(geo, petalMaterial);
+
+    mesh.rotation.z = angle;
+    mesh.rotation.x = 0.2;
+    floretGroup.add(mesh);
+    petals.push({ mesh, baseAngleZ: angle });
+  }
+
+  const stamens = [];
+  const stamenMat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(CONFIG.colors.stamen),
+    emissive: new THREE.Color(CONFIG.colors.stamen),
+    emissiveIntensity: 0.6,
+    roughness: 0.2,
+    clearcoat: 1.0
+  });
+
+  for (let i = 0; i < 6; i++) {
+    const sAngle = (i * Math.PI * 2) / 6 + 0.1;
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(Math.cos(sAngle) * 0.4, -0.3, Math.sin(sAngle) * 0.4),
+      new THREE.Vector3(Math.cos(sAngle) * 1.2, 0.4, Math.sin(sAngle) * 1.2),
+      new THREE.Vector3(Math.cos(sAngle) * 1.5, 1.1, Math.sin(sAngle) * 1.5)
+    ]);
+
+    const stamenGeo = new THREE.TubeGeometry(curve, 20, 0.025, 8, false);
+    const stamenMesh = new THREE.Mesh(stamenGeo, stamenMat);
+
+    const anther = new THREE.Mesh(new THREE.SphereGeometry(0.065, 8, 8), stamenMat);
+    anther.position.set(Math.cos(sAngle) * 1.5, 1.1, Math.sin(sAngle) * 1.5);
+    stamenMesh.add(anther);
+
+    stamens.push(stamenMesh);
+    floretGroup.add(stamenMesh);
+  }
+
+  return { floretGroup, petals, stamens };
+}
+
+const stemMat = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color(CONFIG.colors.stem),
+  roughness: 0.3,
+  clearcoat: 0.6
+});
+
+const trunkCurve = new THREE.CatmullRomCurve3([
+  new THREE.Vector3(0, -3.2, 0),
+  new THREE.Vector3(-0.4, -1.2, 0.2),
+  new THREE.Vector3(0, 0.5, 0)
+]);
+const trunkMesh = new THREE.Mesh(new THREE.TubeGeometry(trunkCurve, 32, 0.14, 12, false), stemMat);
+sakuraGroup.add(trunkMesh);
+
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 0.5, 0);
+sakuraGroup.add(headGroup);
+
+const florets = [];
+for (let i = 0; i < CONFIG.flowers.floretsPerHead; i++) {
+  const uAngle = (i * Math.PI * 2) / CONFIG.flowers.floretsPerHead;
+  const floretObj = buildFloret();
+
+  floretObj.floretGroup.position.set(Math.cos(uAngle) * 0.9, 0.4, Math.sin(uAngle) * 0.9);
+  floretObj.floretGroup.rotation.y = uAngle;
+  headGroup.add(floretObj.floretGroup);
+
+  florets.push(floretObj);
+}
+
+function updateFlowerBloom() {
+  const lift = bloomState.lift;
+  const recurve = bloomState.recurve;
+  const extend = bloomState.stamenExtend;
+
+  florets.forEach(({ petals, stamens }) => {
+    petals.forEach(({ mesh }) => {
+      mesh.geometry.dispose();
+      mesh.geometry = createPetalGeometry(CONFIG.flowers.petalLength, CONFIG.flowers.petalWidth, recurve, lift);
+      mesh.rotation.x = 0.15 + lift * 0.4 + recurve * 0.5;
+    });
+
+    stamens.forEach((stamen) => {
+      stamen.scale.set(extend, extend, extend);
+    });
+  });
+}
+
+/* HAND TRACKING ENGINE */
+const videoElement = document.getElementById('webcamVideo');
+const overlayCanvas = document.getElementById('handOverlay');
+const overlayCtx = overlayCanvas.getContext('2d');
+const hud = document.getElementById('hud');
+
+let handLandmarker = null;
+let lastVideoTime = -1;
+
+let rawGrowVal = 0.75, rawBloomVal = 0.5;
+let smoothGrowVal = 0.75, smoothBloomVal = 0.5;
+let isDebugMode = false;
+let debugTime = 0;
+let handDetectedCount = 0;
+
+async function initHandTracking() {
+  try {
+    hud.textContent = "SAKURA 3D\nEl Algilama: Yukleniyor...";
+    const vision = await FilesetResolver.forVisionTasks(
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+    );
+    
+    handLandmarker = await HandLandmarker.createFromOptions(vision, {
+      baseOptions: {
+        modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
+      },
+      runningMode: "VIDEO",
+      numHands: 2,
+      minHandDetectionConfidence: 0.35,
+      minHandPresenceConfidence: 0.35,
+      minTrackingConfidence: 0.35
+    });
+
+    hud.textContent = "SAKURA 3D\nEl Algilama: Kamera Iznı Isteniyor...";
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoElement.srcObject = stream;
+    await videoElement.play();
+
+    overlayCanvas.width = videoElement.videoWidth || 320;
+    overlayCanvas.height = videoElement.videoHeight || 240;
+  } catch (err) {
+    console.error("Hand Tracking Error:", err);
+    isDebugMode = true;
+  }
+}
+
+initHandTracking();
+
+function processHandTracking() {
+  if (!handLandmarker || !videoElement.videoWidth || videoElement.currentTime === lastVideoTime) return;
+  lastVideoTime = videoElement.currentTime;
+
+  try {
+    const results = handLandmarker.detectForVideo(videoElement, performance.now());
+    
+    if (overlayCanvas.width !== videoElement.videoWidth) {
+      overlayCanvas.width = videoElement.videoWidth;
+      overlayCanvas.height = videoElement.videoHeight;
+    }
+
+    overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+    if (results.landmarks && results.landmarks.length > 0) {
+      handDetectedCount = results.landmarks.length;
+
+      for (let i = 0; i < results.landmarks.length; i++) {
+        const landmarks = results.landmarks[i];
+
+        const thumbTip = landmarks[4];
+        const indexTip = landmarks[8];
+
+        const w = overlayCanvas.width;
+        const h = overlayCanvas.height;
+
+        const tx = (1 - thumbTip.x) * w;
+        const ty = thumbTip.y * h;
+        const ix = (1 - indexTip.x) * w;
+        const iy = indexTip.y * h;
+
+        overlayCtx.save();
+        overlayCtx.strokeStyle = 'rgba(244, 114, 182, 0.8)';
+        overlayCtx.lineWidth = 2;
+        overlayCtx.beginPath();
+        overlayCtx.moveTo(tx, ty);
+        overlayCtx.lineTo(ix, iy);
+        overlayCtx.stroke();
+
+        overlayCtx.fillStyle = '#ffffff';
+        overlayCtx.beginPath();
+        overlayCtx.arc(tx, ty, 4, 0, Math.PI * 2);
+        overlayCtx.arc(ix, iy, 4, 0, Math.PI * 2);
+        overlayCtx.fill();
+        overlayCtx.restore();
+
+        const pinchDist = Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y);
+        const ratio = Math.min(1, Math.max(0, (pinchDist - 0.03) / 0.22));
+
+        if (results.landmarks.length === 1) {
+          rawGrowVal = ratio;
+          rawBloomVal = ratio;
+        } else {
+          if (i === 0) rawGrowVal = ratio;
+          else rawBloomVal = ratio;
+        }
+      }
+    } else {
+      handDetectedCount = 0;
+    }
+  } catch (e) {
+    console.warn("Detection Loop Exception:", e);
+  }
+}
+
+/* KEYBOARD CONTROL */
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'd' || e.key === 'D') {
+    isDebugMode = !isDebugMode;
+  } else if (e.key === 'h' || e.key === 'H') {
+    hud.classList.toggle('hidden');
+    videoElement.classList.toggle('hidden');
+    overlayCanvas.classList.toggle('hidden');
+  } else if (e.key === '1') {
+    isDebugMode = true;
+    rawBloomVal = 0.0;
+  } else if (e.key === '2') {
+    isDebugMode = true;
+    rawBloomVal = 0.5;
+  } else if (e.key === '3') {
+    isDebugMode = true;
+    rawBloomVal = 1.0;
+  }
+});
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* RENDER LOOP */
+function render() {
+  requestAnimationFrame(render);
+
+  if (isDebugMode) {
+    debugTime += 0.012;
+    rawGrowVal = 0.5 + Math.sin(debugTime * 0.5) * 0.45;
+    rawBloomVal = (Math.sin(debugTime) + 1) / 2;
+  } else {
+    processHandTracking();
+  }
+
+  smoothGrowVal += (rawGrowVal - smoothGrowVal) * 0.1;
+  smoothBloomVal += (rawBloomVal - smoothBloomVal) * 0.1;
+
+  bloomTimeline.seek(smoothBloomVal * 1800);
+  updateFlowerBloom();
+
+  const g = Math.max(0.05, smoothGrowVal);
+  sakuraGroup.scale.set(g, g, g);
+
+  sakuraGroup.rotation.y += 0.003;
+
+  const statusText = handDetectedCount > 0
+    ? `Aktif (${handDetectedCount} El)`
+    : `Araniyor`;
+
+  hud.textContent =
+    `SAKURA 3D\n` +
+    `El Algilama: ${statusText}\n` +
+    `Buyume: ${Math.round(smoothGrowVal * 100)}% | Cicek Acma: ${Math.round(smoothBloomVal * 100)}%`;
+
+  controls.update();
+  composer.render();
+}
+
+render();
+</script>
+</body>
+</html>

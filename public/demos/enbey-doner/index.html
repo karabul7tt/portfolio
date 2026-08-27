@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K7 Döner Esenyurt | Odun Ateşinde %100 Yaprak Et Döner</title>
+  <meta name="description" content="Esenyurt Zafer Mahallesi Doğan Araslı Bulvarı'nda Meşe Odununda Pişen Gerçek Yaprak Et Döner, İskender ve Dürüm Lezzeti. Sipariş: 0212 858 18 19">
+  
+  <!-- Favicon & Meta -->
+  <link rel="icon" type="image/jpeg" href="./assets/logo.jpg">
+  <meta property="og:title" content="K7 Döner Esenyurt | Odun Ateşinde %100 Yaprak Et Döner">
+  <meta property="og:description" content="Esenyurt Zafer Mahallesi Doğan Araslı Bulvarı'nda Meşe Odununda Pişen Gerçek Yaprak Et Döner, İskender ve Dürüm Lezzeti. Sipariş: 0212 858 18 19">
+  <meta property="og:image" content="./assets/logo.jpg">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="bg-ambient-gradient text-gray-100 antialiased min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-40 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500/60 shadow-lg shadow-amber-500/20 group-hover:scale-105 group-hover:border-amber-400 transition-all">
+          <img src="./assets/logo.jpg" alt="K7 Döner Esenyurt Logosu" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="text-2xl font-black tracking-wider text-white font-heading uppercase block leading-none">
+            K7 <span class="text-amber-500">DÖNER</span>
+          </span>
+          <span class="text-[10px] tracking-widest text-amber-400/80 uppercase font-semibold">ESENYURT ŞUBESİ</span>
+        </div>
+      </a>
+
+      <!-- NAV LINKS (DESKTOP) -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#menu" class="hover:text-amber-400 transition-colors">Menü & Fiyatlar</a>
+        <a href="#lezzet-sirri" class="hover:text-amber-400 transition-colors">Lezzet Sırrımız</a>
+        <a href="#siparis" class="hover:text-amber-400 transition-colors">Online Sipariş</a>
+        <a href="#yorumlar" class="hover:text-amber-400 transition-colors">Yorumlar</a>
+        <a href="#iletisim" class="hover:text-amber-400 transition-colors">İletişim & Konum</a>
+      </nav>
+
+      <!-- FAST CONTACT BUTTONS -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="tel:02128581819" class="btn-outline-amber text-xs px-3.5 py-2">
+          <i class="fa-solid fa-phone"></i> 0212 858 18 19
+        </a>
+        <a href="https://wa.me/902128581819?text=Merhaba,%20siparis%20vermek%20istiyorum" target="_blank" class="btn-whatsapp text-xs px-3.5 py-2">
+          <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Sipariş
+        </a>
+      </div>
+
+      <!-- MOBILE MENU BUTTON -->
+      <button onclick="document.getElementById('mobile-nav').classList.toggle('hidden')" class="md:hidden text-amber-400 text-2xl p-2 focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+    </div>
+
+    <!-- MOBILE NAV MENU -->
+    <div id="mobile-nav" class="hidden md:hidden bg-gray-950/95 border-b border-amber-500/20 px-6 py-6 space-y-4">
+      <a href="#menu" onclick="document.getElementById('mobile-nav').classList.add('hidden')" class="block text-gray-200 font-medium py-2">Menü & Fiyatlar</a>
+      <a href="#lezzet-sirri" onclick="document.getElementById('mobile-nav').classList.add('hidden')" class="block text-gray-200 font-medium py-2">Lezzet Sırrımız</a>
+      <a href="#siparis" onclick="document.getElementById('mobile-nav').classList.add('hidden')" class="block text-gray-200 font-medium py-2">Online Sipariş</a>
+      <a href="#yorumlar" onclick="document.getElementById('mobile-nav').classList.add('hidden')" class="block text-gray-200 font-medium py-2">Yorumlar</a>
+      <a href="#iletisim" onclick="document.getElementById('mobile-nav').classList.add('hidden')" class="block text-gray-200 font-medium py-2">İletişim & Konum</a>
+      <div class="pt-4 flex flex-col gap-3">
+        <a href="tel:02128581819" class="btn-outline-amber justify-center text-sm py-2.5">
+          <i class="fa-solid fa-phone"></i> 0212 858 18 19
+        </a>
+        <a href="https://wa.me/902128581819?text=Merhaba,%20siparis%20vermek%20istiyorum" target="_blank" class="btn-whatsapp justify-center text-sm py-2.5">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp Sipariş
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden flex items-center">
+    <!-- Hero Background Image & Soft Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img src="./assets/hero.jpg" alt="K7 Döner Odun Ateşi" class="w-full h-full object-cover object-center transform scale-105 filter brightness-75">
+      <div class="hero-gradient-overlay absolute inset-0"></div>
+    </div>
+
+    <!-- Soft Glow Light Effects -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none pulse-amber-glow"></div>
+    <div class="absolute bottom-10 right-10 w-80 h-80 bg-amber-700/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        
+        <!-- Live Status Pill -->
+        <div id="status-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 border border-amber-500/20 backdrop-blur-md mb-6 shadow-lg">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-emerald-400 font-semibold text-xs">Şu An Açık • Sıcak Serviste</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-6 font-heading">
+          Esenyurt’un Hakiki <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">Odun Ateşinde Yaprak Döneri</span>
+        </h1>
+
+        <!-- Description -->
+        <p class="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed font-light">
+          Zafer Mahallesi Doğan Araslı Bulvarı’nda meşe odununun kor ateşinde ağır ağır pişen %100 dana et döner, taş fırından taze çıkan lavaş ve özel terbiye lezzeti.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center gap-4 mb-12">
+          <a href="#menu" class="btn-amber text-base px-8 py-3.5">
+            <i class="fa-solid fa-utensils"></i> Menü & Fiyatları İncele
+          </a>
+          <a href="https://wa.me/902128581819?text=Merhaba,%20siparis%20vermek%20istiyorum" target="_blank" class="btn-whatsapp text-base px-8 py-3.5">
+            <i class="fa-brands fa-whatsapp text-xl"></i> Anında WhatsApp Sipariş
+          </a>
+        </div>
+
+        <!-- Feature Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-amber-500/20">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-cow"></i>
+            </div>
+            <span class="text-xs font-medium text-gray-300">%100 Dana Yaprak Et</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <span class="text-xs font-medium text-gray-300">Meşe Odun Ateşi</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-bread-slice"></i>
+            </div>
+            <span class="text-xs font-medium text-gray-300">Günlük Taze Lavaş</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-star text-amber-400"></i>
+            </div>
+            <span class="text-xs font-medium text-gray-300">4.8 Yıldız (Esenyurt)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALITY & HERITAGE SECTION -->
+  <section id="lezzet-sirri" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+        <span class="text-amber-400 font-bold text-xs tracking-widest uppercase mb-2 block">Geleneksel Ustalık</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 font-heading">Neden K7 Döner?</h2>
+        <p class="text-gray-400 text-sm sm:text-base">Esenyurt'ta yıllardır aynı özen ve değişmeyen usta tarifiyle hazırladığımız lezzet sırlarımız.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="glass-card p-6 animate-on-scroll">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-5">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-100 mb-2">Meşe Odunu Ateşi</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Gazlı veya elektrikli ocağa asla yer yok! Dönerimiz sadece meşe odununun meşe korunda ağır ağır kıvam alarak pişer.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card p-6 animate-on-scroll">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-5">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-100 mb-2">%100 Dana Yaprak Et</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Kıyma eklemesi yapılmadan, özenle seçilmiş dana but etlerinden hazırlanan gerçek yaprak kesim döner lezzeti.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card p-6 animate-on-scroll">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-5">
+            <i class="fa-solid fa-wheat-awn"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-100 mb-2">Taş Fırından Lavaş</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Siparişiniz üzerine taş fırınımızdan sıcacık çıkan incecik taze lavaş ve tırnak pide çeşitleri.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-card p-6 animate-on-scroll">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-2xl mb-5">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-100 mb-2">Hızlı & Sıcak Servis</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Esenyurt ve çevresine özel termal korumalı paket servisimizle döneriniz sıcacık kapınıza ulaşır.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE MENU & PRICE LIST SECTION -->
+  <section id="menu" class="py-20 bg-black/40 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Menu Header & Controls -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div>
+          <span class="text-amber-400 font-bold text-xs tracking-widest uppercase block mb-2">Güncel Fiyat Listesi</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-heading">K7 Döner Menüsü</h2>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-full md:w-72">
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Lezzet ara... (dürüm, iskender, künefe)" 
+            class="w-full bg-gray-900/80 border border-amber-500/20 text-gray-200 text-sm rounded-full pl-10 pr-4 py-2.5 focus:outline-none focus:border-amber-500 transition-colors placeholder-gray-500"
+          >
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-amber-500/60 text-sm"></i>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        <button class="tab-btn active" data-category="all">Tüm Lezzetler</button>
+        <button class="tab-btn" data-category="durum">Dürümler & Tombik</button>
+        <button class="tab-btn" data-category="porsiyon">Porsiyon & İskender</button>
+        <button class="tab-btn" data-category="yan">Yan Lezzetler & Çorba</button>
+        <button class="tab-btn" data-category="tatli">Tatlı & İçecekler</button>
+      </div>
+
+      <!-- Menu Items Grid (Populated by app.js) -->
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
+        <!-- Dynamic JS Content -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ONLINE ORDERING PLATFORMS SECTION -->
+  <section id="siparis" class="py-16 relative border-y border-amber-500/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="glass-card p-8 sm:p-12 relative overflow-hidden">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-7">
+            <span class="text-amber-400 font-bold text-xs tracking-widest uppercase block mb-2">Hızlı & Kolay Sipariş</span>
+            <h2 class="text-3xl font-bold text-white mb-4 font-heading">Acıktınız mı? Tek Tıkla Kapınızda!</h2>
+            <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+              İsterseniz WhatsApp hattımızdan direkt konum atarak sipariş verin, isterseniz favori yemek uygulamanızı tercih edin.
+            </p>
+            
+            <div class="flex flex-wrap gap-4">
+              <a href="tel:02128581819" class="btn-amber text-sm">
+                <i class="fa-solid fa-phone"></i> 0212 858 18 19'u Ara
+              </a>
+              <a href="tel:4446221" class="btn-outline-amber text-sm">
+                <i class="fa-solid fa-headset"></i> 444 62 21 Sipariş Hattı
+              </a>
+              <a href="https://wa.me/902128581819?text=Merhaba,%20siparis%20vermek%20istiyorum" target="_blank" class="btn-whatsapp text-sm">
+                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp'tan Yaz
+              </a>
+            </div>
+          </div>
+
+          <!-- App badges -->
+          <div class="lg:col-span-5 flex flex-col gap-3">
+            <div class="text-xs text-amber-400/80 font-semibold mb-1">Yemek Platformları Üzerinden Sipariş:</div>
+            
+            <a href="https://www.yemeksepeti.com" target="_blank" class="flex items-center justify-between p-4 bg-gray-900/80 hover:bg-gray-800 rounded-xl border border-gray-800 transition-all group">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-rose-600/20 text-rose-500 flex items-center justify-center font-bold">YS</div>
+                <div>
+                  <h4 class="font-bold text-gray-100 text-sm">Yemeksepeti</h4>
+                  <span class="text-xs text-gray-400">K7 Döner Esenyurt</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-right text-gray-400 group-hover:text-amber-400 transition-colors"></i>
+            </a>
+
+            <a href="https://www.trendyol.com/yemek" target="_blank" class="flex items-center justify-between p-4 bg-gray-900/80 hover:bg-gray-800 rounded-xl border border-gray-800 transition-all group">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-orange-600/20 text-orange-500 flex items-center justify-center font-bold">TY</div>
+                <div>
+                  <h4 class="font-bold text-gray-100 text-sm">Trendyol Yemek</h4>
+                  <span class="text-xs text-gray-400">Hızlı Teslimat Restoranı</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-right text-gray-400 group-hover:text-amber-400 transition-colors"></i>
+            </a>
+
+            <a href="https://getir.com/yemek" target="_blank" class="flex items-center justify-between p-4 bg-gray-900/80 hover:bg-gray-800 rounded-xl border border-gray-800 transition-all group">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center font-bold">G</div>
+                <div>
+                  <h4 class="font-bold text-gray-100 text-sm">GetirYemek</h4>
+                  <span class="text-xs text-gray-400">Sıcak & Taze Servis</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-arrow-right text-gray-400 group-hover:text-amber-400 transition-colors"></i>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUSTOMER REVIEWS SECTION -->
+  <section id="yorumlar" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+        <span class="text-amber-400 font-bold text-xs tracking-widest uppercase mb-2 block">Müşteri Deneyimleri</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 font-heading">Esenyurt Ne Diyor?</h2>
+        <p class="text-gray-400 text-sm sm:text-base">Restoranımızı ziyaret eden ve paket servisimizden sipariş veren değerli misafirlerimizin yorumları.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="glass-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center text-amber-400 text-sm mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span class="ml-2 text-xs text-gray-400">5.0</span>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6 italic">
+              "Doğan Araslı bulvarında belediyenin hemen yanında. Dönerin eti cidden yaprak et ve meşe kokusu harika siniyor. Dürüm lavaşı sıcacık geliyor. Esenyurt'ta tereddütsüz döner yiyeceğiniz tek adres."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-sm">MÖ</div>
+            <div>
+              <h4 class="font-bold text-sm text-gray-200">Murat Özkan</h4>
+              <span class="text-xs text-gray-500">Google Haritalar Yorumu</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center text-amber-400 text-sm mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span class="ml-2 text-xs text-gray-400">5.0</span>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6 italic">
+              "İskender dönerini denedim, tereyağı tam zamanında cızır cızır döküldü, eti pamuk gibi. Paket serviste de hiç soğumadan getiriyorlar. Eline sağlık ustaların."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-sm">SK</div>
+            <div>
+              <h4 class="font-bold text-sm text-gray-200">Selin Kaya</h4>
+              <span class="text-xs text-gray-500">Yemeksepeti Kullanıcısı</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center text-amber-400 text-sm mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span class="ml-2 text-xs text-gray-400">5.0</span>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6 italic">
+              "Tombik döner 120 gram söyledim, eti bol ve lezzetli. Bakır maşrapada yayık ayranı ile tam bir lezzet şöleni. Ailecek sık sık uğruyoruz."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-gray-800">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-sm">AH</div>
+            <div>
+              <h4 class="font-bold text-sm text-gray-200">Ahmet Hakan B.</h4>
+              <span class="text-xs text-gray-500">Esenyurt Sakini</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LOCATION & CONTACT SECTION -->
+  <section id="iletisim" class="py-20 bg-black/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Address & Contact Info -->
+        <div class="lg:col-span-5 glass-card p-8 flex flex-col justify-between">
+          <div>
+            <span class="text-amber-400 font-bold text-xs tracking-widest uppercase block mb-2">Bize Ulaşın</span>
+            <h2 class="text-3xl font-extrabold text-white mb-6 font-heading">Esenyurt Şubemiz</h2>
+
+            <!-- Restoran Görünüm Fotoğrafı -->
+            <div class="relative h-44 rounded-xl overflow-hidden mb-6 border border-amber-500/20 shadow-md group">
+              <img src="./assets/venue.jpg" alt="K7 Döner Esenyurt Şubesi Dış Görünüm" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-70"></div>
+              <span class="absolute bottom-2.5 left-3 text-xs font-semibold text-amber-300 flex items-center gap-1.5 backdrop-blur-sm bg-black/40 px-2.5 py-1 rounded-lg">
+                <i class="fa-solid fa-store"></i> K7 Döner Esenyurt Salon Görünümü
+              </span>
+            </div>
+
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0 mt-1">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-gray-200 mb-1">Adres Bilgisi</h4>
+                  <p class="text-sm text-gray-400 leading-relaxed">
+                    Zafer Mah. Doğan Araslı Bulvarı, Tabela Durağı, Yeni Belediye Meydanı No: 81/D-E<br>
+                    <strong>Esenyurt / İstanbul</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0 mt-1">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-gray-200 mb-1">Telefon Numaraları</h4>
+                  <p class="text-sm text-gray-400">
+                    Şube Tel: <a href="tel:02128581819" class="text-amber-400 font-semibold hover:underline">0212 858 18 19</a><br>
+                    Sipariş Hattı: <a href="tel:4446221" class="text-amber-400 font-semibold hover:underline">444 62 21</a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0 mt-1">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-gray-200 mb-1">Çalışma Saatleri</h4>
+                  <p class="text-sm text-gray-400">
+                    Haftanın Her Günü: <span class="text-gray-200 font-semibold">10:00 - 22:30</span><br>
+                    <span class="text-xs text-amber-400/80">Paket servis ve salonda servis mevcuttur.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Neighborhood delivery tags -->
+          <div class="pt-6 border-t border-gray-800 mt-8">
+            <span class="text-xs font-semibold text-gray-400 block mb-2">Hızlı Paket Servis Bölgelerimiz:</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-gray-400">
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Zafer Mah.</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Güzelyurt</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Saadetdere</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Yeşilkent</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Merkez</span>
+              <span class="px-2.5 py-1 rounded-md bg-gray-900 border border-gray-800">Namık Kemal</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Google Maps Embed Frame -->
+        <div class="lg:col-span-7 glass-card p-3 overflow-hidden flex flex-col justify-between">
+          <div class="w-full h-full min-h-[420px] rounded-xl overflow-hidden">
+            <iframe 
+              title="K7 Döner Esenyurt Konumu"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.97448821946!2d28.6751915!3d41.0258217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa06000000001%3A0x123456789abcdef!2sDogan%20Arasli%20Blv.%20No%3A81%2C%20Esenyurt%2FIstanbul!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
+              class="w-full h-full min-h-[420px] rounded-xl border-0 filter brightness-95 contrast-105" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-950 border-t border-gray-900 py-12 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full overflow-hidden border border-amber-500/40">
+          <img src="./assets/logo.jpg" alt="K7 Döner Esenyurt Logo" class="w-full h-full object-cover">
+        </div>
+        <span class="font-bold text-gray-200">K7 Döner Esenyurt</span>
+        <span class="text-xs text-gray-600">| Odun Ateşinde Yaprak Et Döner</span>
+      </div>
+
+      <div class="text-xs text-gray-500 text-center md:text-right">
+        Zafer Mah. Doğan Araslı Bulvarı No: 81/D-E, Esenyurt / İstanbul<br>
+        Sipariş: 0212 858 18 19 — © 2026 Tüm Hakları Saklıdır.
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- FLOATING CART BUTTON -->
+  <div id="floating-cart-btn" class="floating-cart-btn hidden">
+    <div class="relative">
+      <i class="fa-solid fa-cart-shopping text-xl"></i>
+      <span id="cart-count" class="absolute -top-2 -right-2.5 bg-gray-950 text-amber-400 text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border border-amber-400">0</span>
+    </div>
+    <span>Sepetim</span>
+    <span id="cart-total-badge" class="bg-gray-950/40 px-2.5 py-1 rounded-full text-xs font-black">0 ₺</span>
+  </div>
+
+  <!-- INTERACTIVE CART & ORDER MODAL -->
+  <div id="cart-modal" class="fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-lg w-full p-6 sm:p-8 relative max-h-[90vh] flex flex-col justify-between border-amber-500/30 shadow-2xl">
+      
+      <div>
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-800">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full overflow-hidden border border-amber-500/50 shadow-md">
+              <img src="./assets/logo.jpg" alt="K7 Döner Logosu" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white font-heading">Sipariş Sepetiniz</h3>
+              <span class="text-xs text-amber-400/80">K7 Döner Esenyurt</span>
+            </div>
+          </div>
+          <button onclick="closeCartModal()" class="text-gray-400 hover:text-white p-2 text-xl">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div id="cart-modal-items" class="space-y-3 max-h-60 overflow-y-auto pr-1 mb-6">
+          <!-- Dynamic Cart Items -->
+        </div>
+
+        <!-- Note & Address Form -->
+        <div class="space-y-3 mb-6">
+          <div>
+            <label class="text-xs font-semibold text-gray-300 block mb-1">Teslimat Adresiniz (Opsiyonel):</label>
+            <input 
+              type="text" 
+              id="order-address-input" 
+              placeholder="Mahalle, Sokak, Bina No / Daire..." 
+              class="w-full bg-gray-900 border border-gray-800 text-gray-200 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-amber-500"
+            >
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-300 block mb-1">Sipariş Notu (Opsiyonel):</label>
+            <input 
+              type="text" 
+              id="order-note-input" 
+              placeholder="Örn: Bol soğanlı olsun, lavaş çift kat olsun..." 
+              class="w-full bg-gray-900 border border-gray-800 text-gray-200 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-amber-500"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer & WhatsApp Action -->
+      <div class="pt-4 border-t border-gray-800 flex flex-col gap-3">
+        <div class="flex justify-between items-center text-sm font-bold text-gray-200">
+          <span>Toplam Tutar:</span>
+          <span id="modal-total-price" class="text-2xl text-amber-400 font-extrabold">0 ₺</span>
+        </div>
+        <button onclick="sendWhatsAppOrder()" class="btn-whatsapp justify-center text-base py-3.5">
+          <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp İle Siparişi Gönder
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="./app.js"></script>
+</body>
+</html>

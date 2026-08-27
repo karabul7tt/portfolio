@@ -1,0 +1,100 @@
+/* Modern Tactical GCS Theme */
+:root {
+    --bg-dark: #07090e;
+    --panel-bg: #0b0f19;
+    --panel-border: #1e293b;
+    --accent-blue: #38bdf8;
+    --accent-glow: rgba(56, 189, 248, 0.25);
+    --warning-orange: #f97316;
+    --alert-red: #ef4444;
+    --success-green: #22c55e;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e2e8f0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
+}
+
+/* Tactical Panel */
+.tactical-panel {
+    background: rgba(11, 15, 25, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.tactical-panel-glow {
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Radar & Grid Scanlines */
+.scanline {
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.3)
+    );
+    background-size: 100% 4px;
+}
+
+/* Glowing text and badges */
+.glow-text-cyan {
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
+}
+
+.glow-text-orange {
+    text-shadow: 0 0 8px rgba(249, 115, 22, 0.7);
+}
+
+.glow-text-red {
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+}
+
+/* Blinking Alert Animation */
+@keyframes alertPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.98); }
+}
+
+.animate-alert {
+    animation: alertPulse 1.2s infinite ease-in-out;
+}
+
+/* Tactical Crosshair / Cursor */
+.tactical-cursor {
+    cursor: crosshair;
+}
+
+/* Buttons */
+.tactical-btn {
+    transition: all 0.15s ease-in-out;
+}
+.tactical-btn:hover {
+    box-shadow: 0 0 12px var(--accent-glow);
+    border-color: var(--accent-blue);
+}
+.tactical-btn:active {
+    transform: scale(0.98);
+}

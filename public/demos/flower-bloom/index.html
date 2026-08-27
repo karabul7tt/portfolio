@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>İnteraktif Çiçek & Yaprak Bahçesi</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- MediaPipe Hands & Camera Utils for Webcam Hand Tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <!-- UI Overlay -->
+  <div class="ui-container">
+    <div class="header">
+      <h1>🌸 İnteraktif Çiçek & Yaprak Bahçesi</h1>
+      <p>✋ <b>El Açık:</b> Çiçek Açtırır | ✊ <b>El Yumruk/Kapalı:</b> Yeşil Yapraklar Oluşturur</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="flowerType">Çiçek Tipi:</label>
+        <select id="flowerType">
+          <option value="magic">✨ Sihirli Rengarenk</option>
+          <option value="sakura">🌸 Kiraz Çiçeği (Sakura)</option>
+          <option value="rose">🌹 Gül / Katmerli</option>
+          <option value="sunflower">🌻 Ayçiçeği / Papatya</option>
+          <option value="lotus">🪷 Nilüfer</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="soundToggle">Ses Efektleri:</label>
+        <button id="soundToggle" class="btn active">🔔 Ses Açık</button>
+      </div>
+
+      <div class="control-group">
+        <label for="webcamToggle">El Takibi (Kamera):</label>
+        <button id="webcamToggle" class="btn">📷 Kamerayla El Takibi</button>
+      </div>
+
+      <div class="control-group">
+        <button id="clearBtn" class="btn danger">🗑️ Temizle</button>
+      </div>
+    </div>
+  </div>
+
+  <video id="webcam" autoplay playsinline style="display:none;"></video>
+
+  <script src="script.js"></script>
+</body>
+</html>

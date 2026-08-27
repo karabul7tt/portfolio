@@ -1,0 +1,234 @@
+/* K7 Döner Esenyurt - Premium Gourmet Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-dark: #0c0e12;
+  --bg-card: rgba(22, 25, 32, 0.75);
+  --bg-card-hover: rgba(30, 34, 44, 0.85);
+  --amber-primary: #f59e0b;
+  --amber-secondary: #d97706;
+  --amber-glow: rgba(245, 158, 11, 0.15);
+  --wood-warm: #1e1512;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-subtle: rgba(245, 158, 11, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Yumuşak Renk Geçişleri & Arka Plan Işımaları */
+.bg-ambient-gradient {
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(217, 119, 6, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(180, 83, 9, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(30, 21, 18, 0.4) 0%, transparent 60%),
+    #0c0e12;
+}
+
+.hero-gradient-overlay {
+  background: linear-gradient(
+    180deg, 
+    rgba(12, 14, 18, 0.4) 0%, 
+    rgba(12, 14, 18, 0.75) 60%, 
+    #0c0e12 100%
+  );
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.12);
+  transform: translateY(-4px);
+}
+
+.glass-nav {
+  background: rgba(12, 14, 18, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+/* Yumuşak Amber Buton Stili */
+.btn-amber {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0c0e12;
+  font-weight: 700;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-amber:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-outline-amber {
+  background: rgba(245, 158, 11, 0.05);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline-amber:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.6);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-whatsapp:hover {
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Animasyonlu Kor ve Işık Efekti */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-amber-glow {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+
+/* Özel Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0e12;
+}
+::-webkit-scrollbar-thumb {
+  background: #272c36;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}
+
+/* Kategori Sekme Butonları */
+.tab-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-btn.active, .tab-btn:hover {
+  color: #0c0e12;
+  background: #f59e0b;
+  border-color: #f59e0b;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+/* Gramaj Seçici Pills */
+.portion-pill {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: #d1d5db;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.portion-pill.active {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+/* Floating Cart Badge */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0c0e12;
+  padding: 1rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-cart-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.5);
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}

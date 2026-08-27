@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Hand Reveal Window - Iron Man & Spider-Man</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- MediaPipe Hands & Camera Utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Webcam Video -->
+  <video id="webcam" autoplay playsinline></video>
+  
+  <!-- Canvas for Magic Window Reveal & Suit Rendering -->
+  <canvas id="magicCanvas"></canvas>
+
+  <!-- Futuristic UI Overlay -->
+  <div class="jarvis-ui">
+    <div class="top-bar">
+      <div class="sys-status">
+        <span class="pulse-dot"></span> MAGIC WINDOW REVEAL // AR SUIT
+      </div>
+      <div class="title">İCİ EL ARASINDA KOSTÜM PENCERESİ</div>
+      <div id="suitMeter" class="power-meter">SUIT: SPIDER-MAN / IRON MAN</div>
+    </div>
+
+    <!-- Central Status Alert -->
+    <div id="statusAlert" class="status-alert">İKİ ELİNİZLE PENCEREYİ AÇIN...</div>
+
+    <!-- Controls Overlay -->
+    <div class="bottom-controls">
+      <div class="instruction">
+        <span>🙌 <b>İki Elinizi Açın:</b> İki elinizin arasında vücudunuza özel kostüm penceresi açılır</span>
+        <span>↔️ <b>Elleri Uzaklaştırıp Yaklaştırın:</b> Kostüm penceresinin genişliğini kontrol edin</span>
+      </div>
+      <div class="buttons">
+        <div class="control-group">
+          <label for="suitType">Kostüm Seçimi:</label>
+          <select id="suitType">
+            <option value="spiderman">🕷️ Spider-Man (Miles Morales Logo)</option>
+            <option value="ironman">🤖 Iron Man (Arc Reactor & Armor)</option>
+          </select>
+        </div>
+        <button id="audioToggle" class="btn active">🔔 Ses Açık</button>
+        <button id="webcamBtn" class="btn primary">📷 Kamerayı Başlat</button>
+        <button id="demoBtn" class="btn secondary">⚡ Otomatik Demo (Pencere)</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

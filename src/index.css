@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg-main: #000000;
+  --bg-card: #0c0c0e;
+  --bg-card-elevated: #141417;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --text-sub: #71717a;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --btn-main-bg: #ffffff;
+  --btn-main-text: #000000;
+  --btn-sub-bg: rgba(255, 255, 255, 0.08);
+  --btn-sub-text: #ffffff;
+}
+
+html.light {
+  color-scheme: light;
+  --bg-main: #ffffff;
+  --bg-card: #f4f4f7;
+  --bg-card-elevated: #e9e9ee;
+  --text-main: #000000;
+  --text-muted: #4b5563;
+  --text-sub: #6b7280;
+  --border-subtle: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.28);
+  --btn-main-bg: #000000;
+  --btn-main-text: #ffffff;
+  --btn-sub-bg: rgba(0, 0, 0, 0.06);
+  --btn-sub-text: #000000;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Geist', 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  min-height: 100vh;
+}
+
+/* Hide default OS cursor everywhere on desktop */
+@media (hover: hover) and (pointer: fine) {
+  html, body, *, *::before, *::after, a, button, input, textarea, select, [role="button"], [data-cursor] {
+    cursor: none !important;
+  }
+}
+
+/* Custom Scrollbar - Dark */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Custom Scrollbar - Light */
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Selection - Dark */
+::selection {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Selection - Light */
+html.light ::selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Typography Italic Emphasized class */
+.editorial-italic {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Marquee infinite horizontal animation */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Vertical Infinite Scrolling Photo Columns */
+@keyframes scrollColDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes scrollColUp {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-scroll-col-down {
+  animation: scrollColDown 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-col-up {
+  animation: scrollColUp 28s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover */
+.animate-scroll-col-down:hover,
+.animate-scroll-col-up:hover {
+  animation-play-state: paused;
+}
+
+/* Image card hover effect */
+.photo-card {
+  filter: grayscale(100%) contrast(110%);
+  transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.photo-card:hover {
+  filter: grayscale(0%) contrast(105%);
+}
