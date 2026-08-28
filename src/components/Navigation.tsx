@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
+import { ArrowUpRight, Sun, Moon } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolio';
 import { useTheme } from '../context/ThemeContext';
 
@@ -28,7 +28,7 @@ export const Navigation: React.FC = () => {
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled
+          scrolled || menuOpen
             ? 'py-4 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-b border-black/10 dark:border-white/10 shadow-sm'
             : 'py-7 bg-transparent'
         }`}
@@ -37,12 +37,13 @@ export const Navigation: React.FC = () => {
           {/* Brand Name */}
           <a
             href="#hero"
+            onClick={() => setMenuOpen(false)}
             className="text-lg sm:text-xl font-extrabold tracking-tighter uppercase font-sans text-black dark:text-white hover:opacity-80 transition-opacity"
           >
             KARABULUT
           </a>
 
-          {/* Right Header Actions: Theme Toggle + Menu */}
+          {/* Right Header Actions: Theme Toggle + Single Unified Menu/Close Button */}
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Theme Toggle Button */}
             <button
@@ -63,14 +64,14 @@ export const Navigation: React.FC = () => {
               )}
             </button>
 
-            {/* Minimalist Hamburger Button */}
+            {/* Single Unified Hamburger / Close Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="p-2 text-black dark:text-white hover:opacity-80 transition-opacity group flex items-center gap-2"
-              aria-label="Menüyü Aç/Kapat"
+              aria-label={menuOpen ? 'Menüyü Kapat' : 'Menüyü Aç'}
             >
               <span className="text-xs font-mono tracking-widest text-zinc-600 dark:text-zinc-400 hidden sm:inline">
-                MENÜ
+                {menuOpen ? 'KAPAT' : 'MENÜ'}
               </span>
               <div className="space-y-1.5 w-6">
                 <span className={`block h-0.5 bg-black dark:bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : 'w-6'}`} />
@@ -84,18 +85,12 @@ export const Navigation: React.FC = () => {
 
       {/* Fullscreen Overlay Menu */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-16 animate-fade-in text-black dark:text-white">
+        <div className="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-16 pt-24 sm:pt-28 animate-fade-in text-black dark:text-white">
           {/* Top Row inside Menu */}
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
             <span className="text-xs font-mono text-zinc-500 tracking-widest uppercase">
               [ NAVİGASYON ]
             </span>
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="p-2 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-black dark:text-white transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
           </div>
 
           {/* Navigation Links */}
