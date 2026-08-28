@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mehmetkarabul7tt.com.tr/sitemap.xml
