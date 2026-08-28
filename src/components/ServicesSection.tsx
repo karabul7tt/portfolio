@@ -1,102 +1,30 @@
 import React from 'react';
 import { Smartphone, Monitor, Globe, ArrowRight, CheckCircle2, Video, Code2, Sparkles } from 'lucide-react';
 import { Marquee } from './Marquee';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const ServicesSection: React.FC = () => {
-  const services = [
-    {
-      number: '01',
-      icon: <Smartphone className="w-6 h-6 text-black dark:text-white" />,
-      title: 'iOS Uygulama Geliştirme',
-      tagline: 'Swift & SwiftUI',
-      description:
-        'iPhone ve iPad için Swift ve SwiftUI kullanarak hızlı, sade ve kullanıcı dostu yerel mobil uygulamalar geliştiriyorum.',
-      deliverables: [
-        'Swift & SwiftUI ile modern arayüz ve mimari',
-        'API ve veri tabanı entegrasyonu',
-        'Cihaz özellikleri (Kamera, bildirimler, ses, sensörler)',
-        'App Store yayına hazırlık desteği',
-      ],
-      badge: 'ANA UZMANLIK',
-      highlight: true,
-    },
-    {
-      number: '02',
-      icon: <Video className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Yapay Zeka & AI Video Üretimi',
-      tagline: 'AI Video • Görsel • Ses • Prompt',
-      description:
-        'Yapay zeka araçlarını kullanarak tanıtım videoları, konsept görseller, seslendirme ve yaratıcı medya içerikleri hazırlıyorum.',
-      deliverables: [
-        'AI ile sinematik video üretimi (Runway, Kling, Luma)',
-        'Yapay zeka ile görsel oluşturma (Midjourney, DALL-E)',
-        'Doğal seslendirme ve ses sentezi (ElevenLabs)',
-        'Yazılım projelerine AI API entegrasyonu (OpenAI, Claude, Gemini)',
-      ],
-      badge: 'YAPAY ZEKA',
-      highlight: true,
-    },
-    {
-      number: '03',
-      icon: <Monitor className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Masaüstü & Sistem Programlama',
-      tagline: 'C# • C++ • C',
-      description:
-        'C#, C++ ve C dilleriyle performans odaklı masaüstü yazılımları, temel algoritmalar ve işlevsel araçlar geliştiriyorum.',
-      deliverables: [
-        'C#, C++ ve C ile masaüstü uygulamaları',
-        'Veri tabanı ve temel algoritma tasarımı',
-        'Modüler ve anlaşılır kod yapısı',
-        'Otomasyon ve veri işleme çözümleri',
-      ],
-      badge: 'SİSTEM & YAZILIM',
-    },
-    {
-      number: '04',
-      icon: <Globe className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Web & Arayüz Geliştirme',
-      tagline: 'JavaScript • HTML5 • CSS3',
-      description:
-        'Sade, hızlı açılan, mobil uyumlu ve modern web sayfaları ve tanıtım arayüzleri geliştiriyorum.',
-      deliverables: [
-        'Mobil ve masaüstü uyumlu responsive tasarım',
-        'Açık / Koyu tema desteği ve sade animasyonlar',
-        'Hızlı ve temiz kodlanmış sayfalar',
-        'Kişisel portfolyo ve tanıtım siteleri',
-      ],
-      badge: 'WEB',
-    },
-    {
-      number: '05',
-      icon: <Sparkles className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Sosyal Medya & İçerik Yönetimi',
-      tagline: 'Görsel Tasarım • Topluluk • İletişim',
-      description:
-        'Kulüp ve marka hesapları için içerik üretimi, görsel tasarım ve dijital iletişim yönetimi yapıyorum.',
-      deliverables: [
-        'Teknoloji ve yazılım içerikleri hazırlama',
-        'Görsel şablonlar ve tanıtım postları',
-        'Etkinlik duyuruları ve topluluk iletişimi',
-        'Sosyal medya hesap yönetimi',
-      ],
-      badge: 'DİJİTAL MEDYA',
-    },
-    {
-      number: '06',
-      icon: <Code2 className="w-6 h-6 text-black dark:text-white" />,
-      title: 'Kod İnceleme & Düzenleme',
-      tagline: 'Refactoring • Hata Ayıklama',
-      description:
-        'Mevcut projelerdeki kodları inceleme, sadeleştirme, hataları giderme ve daha okunabilir hale getirme desteği veriyorum.',
-      deliverables: [
-        'Kod tabanı incelemesi ve sadeleştirme',
-        'Hata ayıklama (debugging)',
-        'Daha temiz ve modüler yapı oluşturma',
-        'Git & GitHub sürüm takibi desteği',
-      ],
-      badge: 'DANIŞMANLIK',
-    },
-  ];
+  const { lang } = useLanguage();
+  const t = TRANSLATIONS[lang].services;
+
+  const getServiceIcon = (number: string) => {
+    switch (number) {
+      case '01':
+        return <Smartphone className="w-6 h-6 text-black dark:text-white" />;
+      case '02':
+        return <Video className="w-6 h-6 text-black dark:text-white" />;
+      case '03':
+        return <Monitor className="w-6 h-6 text-black dark:text-white" />;
+      case '04':
+        return <Globe className="w-6 h-6 text-black dark:text-white" />;
+      case '05':
+        return <Sparkles className="w-6 h-6 text-black dark:text-white" />;
+      case '06':
+      default:
+        return <Code2 className="w-6 h-6 text-black dark:text-white" />;
+    }
+  };
 
   return (
     <section
@@ -114,17 +42,17 @@ export const ServicesSection: React.FC = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-              HİZMETLERİM & ÇALIŞMA ALANLARIM
+              {t.label}
             </span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-black dark:text-white font-sans">
-                Yazılım ve yapay zeka alanında <strong className="font-extrabold underline decoration-1 underline-offset-8">çözümler</strong> üretiyorum.
+                {t.heading} <strong className="font-extrabold underline decoration-1 underline-offset-8">{t.headingHighlight}</strong> {t.headingEnd}
               </h2>
               <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-sans max-w-2xl leading-relaxed mt-4">
-                iOS uygulamalarından AI video üretimine, masaüstü yazılımlardan web sayfalarına kadar yaptığım çalışmalar:
+                {t.subheading}
               </p>
             </div>
 
@@ -132,7 +60,7 @@ export const ServicesSection: React.FC = () => {
               href="#contact"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-xs tracking-wider uppercase hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-md shrink-0 hover:scale-105 active:scale-95 group"
             >
-              <span>İLETİŞİME GEÇ</span>
+              <span>{t.contactBtn}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
@@ -140,7 +68,7 @@ export const ServicesSection: React.FC = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {services.map((service) => (
+          {t.list.map((service) => (
             <div
               key={service.number}
               data-cursor="project"
@@ -154,7 +82,7 @@ export const ServicesSection: React.FC = () => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                    {service.icon}
+                    {getServiceIcon(service.number)}
                   </div>
                   <div>
                     <span className="text-xs font-mono font-bold text-zinc-500 block">
@@ -184,7 +112,7 @@ export const ServicesSection: React.FC = () => {
               {/* Card Bottom */}
               <div className="border-t border-black/10 dark:border-white/10 pt-5 space-y-2.5">
                 <span className="text-xs font-mono font-semibold text-zinc-500 uppercase block mb-1">
-                  Neler Sunuyorum:
+                  {t.scopeTitle}
                 </span>
                 {service.deliverables.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
@@ -200,7 +128,7 @@ export const ServicesSection: React.FC = () => {
                   href="#contact"
                   className="inline-flex items-center gap-2 text-xs font-mono font-bold text-black dark:text-white hover:underline underline-offset-4 group/btn"
                 >
-                  <span>Görüşelim</span>
+                  <span>{t.talkBtn}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -212,10 +140,10 @@ export const ServicesSection: React.FC = () => {
         <div className="p-8 sm:p-12 rounded-3xl bg-zinc-100 dark:bg-zinc-900 border border-black/15 dark:border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md text-center md:text-left">
           <div className="space-y-2">
             <h4 className="text-xl sm:text-2xl font-bold text-black dark:text-white font-sans">
-              Bir proje veya çalışma fikriniz mi var?
+              {t.ctaHeading}
             </h4>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">
-              İster mobil uygulama, ister yapay zeka veya web... Detayları konuşmak için dilediğiniz zaman iletişime geçebilirsiniz.
+              {t.ctaSubheading}
             </p>
           </div>
 
@@ -223,7 +151,7 @@ export const ServicesSection: React.FC = () => {
             href="#contact"
             className="px-8 py-3.5 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-xs tracking-wider uppercase hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-md shrink-0 hover:scale-105 active:scale-95"
           >
-            İLETİŞİME GEÇİN →
+            {t.ctaBtn}
           </a>
         </div>
 

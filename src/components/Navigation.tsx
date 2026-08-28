@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Sun, Moon } from 'lucide-react';
+import { ArrowUpRight, Sun, Moon, Globe } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolio';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage, Language } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const Navigation: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { lang, setLang } = useLanguage();
+
+  const t = TRANSLATIONS[lang].nav;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,11 +22,17 @@ export const Navigation: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { num: '01', title: 'ANA SAYFA', href: '#hero' },
-    { num: '02', title: 'HAKKIMDA', href: '#about' },
-    { num: '03', title: 'HİZMETLERİM', href: '#services' },
-    { num: '04', title: 'TEKNOLOJİLER', href: '#skills' },
-    { num: '05', title: 'İLETİŞİM', href: '#contact' },
+    { num: '01', title: t.home, href: '#hero' },
+    { num: '02', title: t.about, href: '#about' },
+    { num: '03', title: t.services, href: '#services' },
+    { num: '04', title: t.skills, href: '#skills' },
+    { num: '05', title: t.contact, href: '#contact' },
+  ];
+
+  const languages: { code: Language; label: string; name: string }[] = [
+    { code: 'tr', label: 'TR', name: 'Türkçe' },
+    { code: 'en', label: 'EN', name: 'English' },
+    { code: 'de', label: 'DE', name: 'Deutsch' },
   ];
 
   return (
@@ -43,23 +54,42 @@ export const Navigation: React.FC = () => {
             KARABULUT
           </a>
 
-          {/* Right Header Actions: Theme Toggle + Single Unified Menu/Close Button */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          {/* Right Header Actions: Language Selector + Theme Toggle + Unified Menu Toggle */}
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            
+            {/* Language Selector Pill (TR | EN | DE) */}
+            <div className="flex items-center p-0.5 rounded-full bg-black/5 dark:bg-white/10 border border-black/15 dark:border-white/15 text-[11px] font-mono">
+              {languages.map((item) => (
+                <button
+                  key={item.code}
+                  onClick={() => setLang(item.code)}
+                  className={`px-2 sm:px-2.5 py-1 rounded-full transition-all duration-150 ${
+                    lang === item.code
+                      ? 'bg-black dark:bg-white text-white dark:text-black font-bold shadow-sm'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white'
+                  }`}
+                  title={item.name}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-black/15 dark:border-white/15 text-black dark:text-white transition-all flex items-center gap-2 text-xs font-mono font-medium"
-              title={theme === 'dark' ? 'Beyaz Temaya Geç' : 'Karanlık Temaya Geç'}
+              title={theme === 'dark' ? t.lightTheme : t.darkTheme}
             >
               {theme === 'dark' ? (
                 <>
                   <Sun className="w-4 h-4 text-white" />
-                  <span className="hidden sm:inline">AÇIK TEMA</span>
+                  <span className="hidden sm:inline">{t.lightTheme}</span>
                 </>
               ) : (
                 <>
                   <Moon className="w-4 h-4 text-black" />
-                  <span className="hidden sm:inline">KOYU TEMA</span>
+                  <span className="hidden sm:inline">{t.darkTheme}</span>
                 </>
               )}
             </button>
@@ -68,10 +98,10 @@ export const Navigation: React.FC = () => {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="p-2 text-black dark:text-white hover:opacity-80 transition-opacity group flex items-center gap-2"
-              aria-label={menuOpen ? 'Menüyü Kapat' : 'Menüyü Aç'}
+              aria-label={menuOpen ? t.close : t.menu}
             >
               <span className="text-xs font-mono tracking-widest text-zinc-600 dark:text-zinc-400 hidden sm:inline">
-                {menuOpen ? 'KAPAT' : 'MENÜ'}
+                {menuOpen ? t.close : t.menu}
               </span>
               <div className="space-y-1.5 w-6">
                 <span className={`block h-0.5 bg-black dark:bg-white transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : 'w-6'}`} />
@@ -89,8 +119,25 @@ export const Navigation: React.FC = () => {
           {/* Top Row inside Menu */}
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
             <span className="text-xs font-mono text-zinc-500 tracking-widest uppercase">
-              [ NAVİGASYON ]
+              {t.navigation}
             </span>
+            {/* Language Switcher inside Overlay */}
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <Globe className="w-3.5 h-3.5 text-zinc-500" />
+              {languages.map((item) => (
+                <button
+                  key={item.code}
+                  onClick={() => setLang(item.code)}
+                  className={`px-2 py-1 rounded-md transition-colors ${
+                    lang === item.code
+                      ? 'bg-black dark:bg-white text-white dark:text-black font-bold'
+                      : 'text-zinc-500 hover:text-black dark:hover:text-white'
+                  }`}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Navigation Links */}

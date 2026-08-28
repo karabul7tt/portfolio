@@ -1,23 +1,28 @@
 import React from 'react';
 import { Zap, Layers, Heart, GraduationCap } from 'lucide-react';
 import { Marquee } from './Marquee';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const AboutSection: React.FC = () => {
+  const { lang } = useLanguage();
+  const t = TRANSLATIONS[lang].about;
+
   const principles = [
     {
       icon: <Zap className="w-5 h-5 text-black dark:text-white" />,
-      title: "Performans & Akıcılık",
-      desc: "Swift ve yerel teknolojilerle hızlı, kaynakları verimli kullanan ve akıcı uygulamalar geliştirmeye odaklanıyorum.",
+      title: t.p1Title,
+      desc: t.p1Desc,
     },
     {
       icon: <Layers className="w-5 h-5 text-black dark:text-white" />,
-      title: "Temiz & Anlaşılır Kod",
-      desc: "Okunabilir, sürdürülebilir ve modüler mimariler kurmayı benimsiyorum.",
+      title: t.p2Title,
+      desc: t.p2Desc,
     },
     {
       icon: <Heart className="w-5 h-5 text-black dark:text-white" />,
-      title: "Kullanıcı Deneyimi",
-      desc: "Sade, minimalist ve kullanımı kolay arayüzler tasarlıyorum.",
+      title: t.p3Title,
+      desc: t.p3Desc,
     },
   ];
 
@@ -33,57 +38,51 @@ export const AboutSection: React.FC = () => {
         {/* Subtle Top Label */}
         <div>
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-            HAKKIMDA
+            {t.label}
           </span>
         </div>
 
         {/* Heading */}
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-black dark:text-white font-sans">
-          <strong className="font-extrabold underline decoration-1 underline-offset-8">iOS Geliştirme</strong> ve modern yazılım teknolojilerine odaklanan bir bilgisayar mühendisliği öğrencisiyim.
+          <strong className="font-extrabold underline decoration-1 underline-offset-8">{t.headingHighlight}</strong> {t.heading}
         </h2>
 
         {/* Main Narrative Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-7 space-y-5 text-base sm:text-lg text-zinc-700 dark:text-zinc-300 font-sans leading-relaxed">
-            <p>
-              Üniversitede <strong className="text-black dark:text-white font-semibold">Bilgisayar Mühendisliği</strong> okuyorum. Ağırlıklı olarak <strong className="text-black dark:text-white font-semibold">Swift (iOS)</strong> ile mobil uygulamalar geliştiriyor; aynı zamanda <strong className="text-black dark:text-white font-semibold">C#, C++, C ve JavaScript</strong> ile projeler üretiyorum.
-            </p>
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
-              <strong className="text-black dark:text-white font-semibold">Yazılım, Yapay Zeka ve Yaratıcılık Kulübü</strong>'nde sosyal medya sorumlusu olarak görev alıyorum. Yazılımın yanında üretken yapay zeka araçlarıyla (video oluşturma, görsel modelleme ve prompt hazırlama) aktif olarak ilgileniyorum.
-            </p>
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
-              Sürekli yeni şeyler denemeyi, pratik yapmayı ve işe yarar ürünler ortaya çıkarmayı seviyorum.
-            </p>
+            <p>{t.p1}</p>
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">{t.p2}</p>
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">{t.p3}</p>
           </div>
 
           {/* Right Card: Academic Highlights */}
           <div className="md:col-span-5 space-y-4 p-6 sm:p-8 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-black/15 dark:border-white/15 shadow-md">
             <div className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-mono text-xs font-bold tracking-wider">
               <GraduationCap className="w-4 h-4" />
-              <span>BİLGİLER</span>
+              <span>{t.academicBadge}</span>
             </div>
             
             <div>
-              <h4 className="text-lg font-bold text-black dark:text-white font-sans">Üniversite Eğitimi (Lisans)</h4>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">Mühendislik Fakültesi</p>
-              <p className="text-xs text-zinc-500 font-mono mt-0.5">Bilgisayar Mühendisliği Bölümü</p>
+              <h4 className="text-lg font-bold text-black dark:text-white font-sans">{t.degree}</h4>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">{t.faculty}</p>
+              <p className="text-xs text-zinc-500 font-mono mt-0.5">{t.department}</p>
               <span className="inline-block mt-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 border border-black/15 dark:border-white/20 text-black dark:text-white text-xs font-mono font-medium">
-                2023 — 2027
+                {t.years}
               </span>
             </div>
 
             <div className="border-t border-black/10 dark:border-white/10 pt-4 space-y-3 font-mono text-xs text-zinc-700 dark:text-zinc-300">
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500">Kulüp:</span>
-                <span className="text-black dark:text-white font-medium">Sosyal Medya Sorumlusu</span>
+                <span className="text-zinc-500">{t.clubLabel}</span>
+                <span className="text-black dark:text-white font-medium">{t.clubValue}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500">Ana Odak:</span>
-                <span className="text-black dark:text-white font-bold">iOS / Swift</span>
+                <span className="text-zinc-500">{t.focusLabel}</span>
+                <span className="text-black dark:text-white font-bold">{t.focusValue}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-zinc-500">Diller:</span>
-                <span className="text-black dark:text-white font-medium">İngilizce, Almanca</span>
+                <span className="text-zinc-500">{t.languagesLabel}</span>
+                <span className="text-black dark:text-white font-medium">{t.languagesValue}</span>
               </div>
             </div>
           </div>
@@ -92,7 +91,7 @@ export const AboutSection: React.FC = () => {
         {/* Principles */}
         <div className="space-y-6 pt-6">
           <div className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-            <span className="font-semibold text-black dark:text-white">ÇALIŞMA PRENSİPLERİM</span>
+            <span className="font-semibold text-black dark:text-white">{t.principlesTitle}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { PORTFOLIO_DATA } from '../data/portfolio';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface PhotoCardItem {
   id: string;
@@ -12,35 +13,38 @@ interface PhotoCardItem {
 }
 
 // Atatürk Signature Component
-const AtaturkSignature: React.FC = () => (
+const AtaturkSignature: React.FC<{ badgeText: string }> = ({ badgeText }) => (
   <div className="font-serif italic font-normal tracking-wide text-xs text-white/90 drop-shadow-md select-none border-t border-white/20 pt-1.5 mt-1.5 flex items-center justify-between">
-    <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-300">İlham & Vizyon</span>
+    <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-300">{badgeText}</span>
     <span className="text-sm font-semibold tracking-wider">K. Atatürk</span>
   </div>
 );
 
 export const HeroSection: React.FC = () => {
+  const { lang } = useLanguage();
+  const t = TRANSLATIONS[lang].hero;
+
   // Column 1 photo collection (Atatürk is ONLY here on this side)
   const col1Cards: PhotoCardItem[] = [
     {
       id: 'ataturk-1',
-      title: 'Mustafa Kemal Atatürk',
-      subtitle: '“Hayatta en hakiki mürşit ilimdir, fendir.”',
+      title: t.cards.ataturkTitle,
+      subtitle: t.cards.ataturkSubtitle,
       image: '/assets/ataturk.jpg',
       isAtaturk: true,
       positionClass: 'object-center',
     },
     {
       id: 'mehmet-real',
-      title: 'Mehmet Karabulut',
-      subtitle: 'iOS Geliştirici & Bilgisayar Mühendisliği',
+      title: t.cards.mehmetTitle,
+      subtitle: t.cards.mehmetSubtitle,
       image: '/assets/mehmet.jpg',
       positionClass: 'object-[center_60%]',
     },
     {
       id: 'ios-1',
-      title: 'iOS & Swift',
-      subtitle: 'Apple Ekosistemi & Modern Tasarım',
+      title: t.cards.iosTitle,
+      subtitle: t.cards.iosSubtitle,
       image: '/assets/ios-dev.jpg',
       positionClass: 'object-center',
     },
@@ -50,22 +54,22 @@ export const HeroSection: React.FC = () => {
   const col2Cards: PhotoCardItem[] = [
     {
       id: 'estetik-siber',
-      title: 'Estetik Siber',
-      subtitle: 'Apple Ekosistemi & Minimal Tasarım',
+      title: t.cards.macbookTitle,
+      subtitle: t.cards.macbookSubtitle,
       image: '/assets/macbook.jpg',
       positionClass: 'object-center',
     },
     {
       id: 'derin-odaklanma',
-      title: 'Derin Odaklanma',
-      subtitle: 'Akıl, Kalp ve Zaman',
+      title: t.cards.balanceTitle,
+      subtitle: t.cards.balanceSubtitle,
       image: '/assets/art-balance.jpg',
       positionClass: 'object-center',
     },
     {
       id: 'coding-1',
-      title: 'Yazılım & Algoritma',
-      subtitle: 'Bilgisayar Mühendisliği & Mimari',
+      title: t.cards.codingTitle,
+      subtitle: t.cards.codingSubtitle,
       image: '/assets/coding.jpg',
       positionClass: 'object-center',
     },
@@ -97,7 +101,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Editorial Paragraph */}
           <p className="text-base sm:text-xl text-zinc-700 dark:text-zinc-400 font-sans leading-relaxed max-w-xl">
-            Yeni şeyler <strong className="text-black dark:text-white font-semibold">öğrenmeyi seven</strong> ve öğrendiklerini sürekli pratiğe dökmeye çalışan biriyim. <span className="editorial-italic text-xl sm:text-2xl text-black dark:text-zinc-200">iOS</span>, <span className="editorial-italic text-xl sm:text-2xl text-black dark:text-zinc-200">web</span> ve <span className="editorial-italic text-xl sm:text-2xl text-black dark:text-zinc-200">yapay zeka / AI video</span> teknolojileriyle yenilikçi projeler üretiyorum. Basit, <strong className="text-black dark:text-white font-semibold">pratik</strong> ve <strong className="text-black dark:text-white font-semibold">sürdürülebilir</strong> araçlarla çalışmaktan keyif alıyorum.
+            {t.bio}
           </p>
 
           {/* Action Buttons */}
@@ -106,7 +110,7 @@ export const HeroSection: React.FC = () => {
               href="#contact"
               className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-xs tracking-wider uppercase hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all duration-200 shadow-md hover:scale-105 active:scale-95 group"
             >
-              <span>İLETİŞİME GEÇ</span>
+              <span>{t.contactBtn}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
@@ -114,13 +118,13 @@ export const HeroSection: React.FC = () => {
               href="#services"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-mono tracking-wider uppercase text-black dark:text-white border border-black/15 dark:border-white/15 transition-all"
             >
-              <span>HİZMETLERİ İNCELE</span>
+              <span>{t.servicesBtn}</span>
             </a>
           </div>
 
           {/* Subtext */}
           <div className="pt-2 text-xs font-mono text-zinc-500">
-            Üniversite Eğitimi • Bilgisayar Mühendisliği • iOS & Yapay Zeka (2023 — 2027)
+            {t.subtext}
           </div>
         </div>
 
@@ -160,7 +164,7 @@ export const HeroSection: React.FC = () => {
                     <p className="text-[11px] font-mono text-zinc-300 leading-tight">
                       {card.subtitle}
                     </p>
-                    {card.isAtaturk && <AtaturkSignature />}
+                    {card.isAtaturk && <AtaturkSignature badgeText={t.cards.ataturkBadge} />}
                   </div>
                 </div>
               ))}
@@ -192,7 +196,7 @@ export const HeroSection: React.FC = () => {
                     <p className="text-[11px] font-mono text-zinc-300 leading-tight">
                       {card.subtitle}
                     </p>
-                    {card.isAtaturk && <AtaturkSignature />}
+                    {card.isAtaturk && <AtaturkSignature badgeText={t.cards.ataturkBadge} />}
                   </div>
                 </div>
               ))}
@@ -202,7 +206,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Right Edge SCROLL Indicator with line */}
           <div className="hidden xl:flex flex-col items-center gap-3 absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-mono tracking-widest text-zinc-500 uppercase select-none z-30">
-            <span className="[writing-mode:vertical-lr] tracking-[0.25em]">KAYDIR</span>
+            <span className="[writing-mode:vertical-lr] tracking-[0.25em]">{t.scroll}</span>
             <div className="w-px h-16 bg-gradient-to-b from-black/40 dark:from-white/40 via-black/20 dark:via-white/20 to-transparent animate-pulse" />
           </div>
 

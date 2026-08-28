@@ -1,4 +1,6 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 const TechPill: React.FC<{ name: string; highlight?: boolean }> = ({ name, highlight }) => {
   return (
@@ -17,64 +19,8 @@ const TechPill: React.FC<{ name: string; highlight?: boolean }> = ({ name, highl
 };
 
 export const TechSection: React.FC = () => {
-  const sections = [
-    {
-      number: '01',
-      title: 'PROGRAMLAMA DİLLERİ & iOS',
-      items: [
-        { name: 'Swift (iOS)', highlight: true },
-        { name: 'C#', highlight: true },
-        { name: 'C++', highlight: true },
-        { name: 'C', highlight: true },
-        { name: 'JavaScript' },
-        { name: 'HTML5' },
-        { name: 'CSS3' },
-      ],
-    },
-    {
-      number: '02',
-      title: 'YAPAY ZEKA & MEDYA ARAÇLARI',
-      items: [
-        { name: 'AI Video (Runway / Kling / Luma)', highlight: true },
-        { name: 'Görsel Üretimi (Midjourney / DALL-E)', highlight: true },
-        { name: 'Prompt Hazırlama', highlight: true },
-        { name: 'Ses Sentezi (ElevenLabs)', highlight: true },
-        { name: 'AI API Entegrasyonu (OpenAI, Claude, Gemini)', highlight: true },
-        { name: 'AI Kodlama Araçları (Cursor, Copilot)' },
-      ],
-    },
-    {
-      number: '03',
-      title: 'YAZILIM BECERİLERİ',
-      items: [
-        { name: 'iOS Uygulama Geliştirme', highlight: true },
-        { name: 'Algoritma Tasarımı' },
-        { name: 'Mantıksal Analiz & Optimizasyon' },
-        { name: 'Veri Yapıları' },
-        { name: 'Web Tasarımı' },
-        { name: 'Sosyal Medya Yönetimi' },
-      ],
-    },
-    {
-      number: '04',
-      title: 'ÇALIŞMA YETKİNLİKLERİ',
-      items: [
-        { name: 'Hızlı Öğrenme ve Araştırma' },
-        { name: 'Problem Çözme' },
-        { name: 'Ekip Çalışması' },
-        { name: 'Zaman Yönetimi' },
-        { name: 'Sorumluluk Alma' },
-      ],
-    },
-    {
-      number: '05',
-      title: 'YABANCI DİLLER',
-      items: [
-        { name: 'İngilizce (Mesleki / İleri)', highlight: true },
-        { name: 'Almanca (Temel / Orta)' },
-      ],
-    },
-  ];
+  const { lang } = useLanguage();
+  const t = TRANSLATIONS[lang].tech;
 
   return (
     <section id="skills" className="py-28 sm:py-36 relative border-t border-black/10 dark:border-white/[0.08] bg-white dark:bg-black text-black dark:text-white transition-colors duration-250">
@@ -83,13 +29,13 @@ export const TechSection: React.FC = () => {
         {/* Section Header */}
         <div className="mb-4">
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-            BECERİLER & TEKNOLOJİLER
+            {t.label}
           </span>
         </div>
 
         {/* Categories Stack */}
         <div className="space-y-16">
-          {sections.map((sec) => (
+          {t.sections.map((sec) => (
             <div key={sec.number} className="space-y-6">
               {/* Category Header with number */}
               <div className="flex items-center gap-4 text-xs font-mono tracking-widest uppercase text-zinc-600 dark:text-zinc-400">
