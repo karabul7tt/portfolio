@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Sun, Moon, Globe } from 'lucide-react';
+import { ArrowUpRight, Sun, Moon } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolio';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage, Language } from '../context/LanguageContext';
@@ -121,23 +121,6 @@ export const Navigation: React.FC = () => {
             <span className="text-xs font-mono text-zinc-500 tracking-widest uppercase">
               {t.navigation}
             </span>
-            {/* Language Switcher inside Overlay */}
-            <div className="flex items-center gap-2 text-xs font-mono">
-              <Globe className="w-3.5 h-3.5 text-zinc-500" />
-              {languages.map((item) => (
-                <button
-                  key={item.code}
-                  onClick={() => setLang(item.code)}
-                  className={`px-2 py-1 rounded-md transition-colors ${
-                    lang === item.code
-                      ? 'bg-black dark:bg-white text-white dark:text-black font-bold'
-                      : 'text-zinc-500 hover:text-black dark:hover:text-white'
-                  }`}
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Navigation Links */}
