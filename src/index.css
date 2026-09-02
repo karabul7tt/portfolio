@@ -42,9 +42,9 @@ body {
   min-height: 100vh;
 }
 
-/* Hide default OS cursor everywhere on desktop */
+/* Hide default OS cursor everywhere unconditionally on desktop pointer devices */
 @media (hover: hover) and (pointer: fine) {
-  html, body, *, *::before, *::after, a, button, input, textarea, select, [role="button"], [data-cursor] {
+  *, *::before, *::after, html, body, a, button, input, textarea, select, [role="button"], [data-cursor], p, h1, h2, h3, h4, span, div, section {
     cursor: none !important;
   }
 }
