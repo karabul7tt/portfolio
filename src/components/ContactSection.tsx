@@ -43,7 +43,7 @@ export const ContactSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-6 sm:px-10 space-y-16">
         
         {/* Section Tag */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between reveal">
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
             {t.label}
           </span>
@@ -57,7 +57,7 @@ export const ContactSection: React.FC = () => {
         <div className="space-y-12">
           
           {/* Row 1: E-POSTA */}
-          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 group">
+          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 group reveal reveal-delay-1">
             <span className="text-xs font-mono tracking-[0.25em] text-zinc-500 uppercase flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-black dark:text-white" />
               {t.emailLabel}
@@ -83,7 +83,7 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Row 2: TELEFON */}
-          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 group">
+          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 group reveal reveal-delay-2">
             <span className="text-xs font-mono tracking-[0.25em] text-zinc-500 uppercase flex items-center gap-2">
               <Phone className="w-3.5 h-3.5 text-black dark:text-white" />
               {t.phoneLabel}
@@ -109,7 +109,7 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Row 3: KONUM & EĞİTİM */}
-          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+          <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 reveal reveal-delay-3">
             <span className="text-xs font-mono tracking-[0.25em] text-zinc-500 uppercase flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-black dark:text-white" />
               {t.locationLabel}
@@ -131,7 +131,7 @@ export const ContactSection: React.FC = () => {
         </div>
 
         {/* Social Pill Links */}
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 pt-4 reveal reveal-delay-4">
           {socialLinks.map((item) => (
             <a
               key={item.label}
@@ -146,7 +146,7 @@ export const ContactSection: React.FC = () => {
         </div>
 
         {/* Copyright Footer */}
-        <div className="pt-16 text-center text-xs font-mono text-zinc-500 dark:text-zinc-600 tracking-wider">
+        <div className="pt-16 text-center text-xs font-mono text-zinc-500 dark:text-zinc-600 tracking-wider reveal">
           {getCopyrightText()}
         </div>
       </div>

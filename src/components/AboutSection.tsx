@@ -13,16 +13,19 @@ export const AboutSection: React.FC = () => {
       icon: <Zap className="w-5 h-5 text-black dark:text-white" />,
       title: t.p1Title,
       desc: t.p1Desc,
+      delayClass: 'reveal-delay-1',
     },
     {
       icon: <Layers className="w-5 h-5 text-black dark:text-white" />,
       title: t.p2Title,
       desc: t.p2Desc,
+      delayClass: 'reveal-delay-2',
     },
     {
       icon: <Heart className="w-5 h-5 text-black dark:text-white" />,
       title: t.p3Title,
       desc: t.p3Desc,
+      delayClass: 'reveal-delay-3',
     },
   ];
 
@@ -36,27 +39,27 @@ export const AboutSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-6 sm:px-10 space-y-16">
         
         {/* Subtle Top Label */}
-        <div>
+        <div className="reveal">
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
             {t.label}
           </span>
         </div>
 
         {/* Heading */}
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-black dark:text-white font-sans">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-black dark:text-white font-sans reveal reveal-delay-1">
           <strong className="font-extrabold underline decoration-1 underline-offset-8">{t.headingHighlight}</strong> {t.heading}
         </h2>
 
         {/* Main Narrative Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          <div className="md:col-span-7 space-y-5 text-base sm:text-lg text-zinc-700 dark:text-zinc-300 font-sans leading-relaxed">
+          <div className="md:col-span-7 space-y-5 text-base sm:text-lg text-zinc-700 dark:text-zinc-300 font-sans leading-relaxed reveal reveal-delay-2">
             <p>{t.p1}</p>
             <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">{t.p2}</p>
             <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">{t.p3}</p>
           </div>
 
           {/* Right Card: Academic Highlights */}
-          <div className="md:col-span-5 space-y-4 p-6 sm:p-8 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-black/15 dark:border-white/15 shadow-md">
+          <div className="md:col-span-5 space-y-4 p-6 sm:p-8 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border border-black/15 dark:border-white/15 shadow-md reveal-scale reveal-delay-3">
             <div className="flex items-center gap-2 text-zinc-800 dark:text-zinc-200 font-mono text-xs font-bold tracking-wider">
               <GraduationCap className="w-4 h-4" />
               <span>{t.academicBadge}</span>
@@ -90,7 +93,7 @@ export const AboutSection: React.FC = () => {
 
         {/* Principles */}
         <div className="space-y-6 pt-6">
-          <div className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
+          <div className="text-xs font-mono tracking-widest text-zinc-500 uppercase reveal">
             <span className="font-semibold text-black dark:text-white">{t.principlesTitle}</span>
           </div>
 
@@ -98,7 +101,7 @@ export const AboutSection: React.FC = () => {
             {principles.map((p) => (
               <div
                 key={p.title}
-                className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-black/15 dark:border-white/15 hover:border-black/40 dark:hover:border-white/40 transition-all duration-200 space-y-3 group shadow-sm hover:shadow-md"
+                className={`p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-black/15 dark:border-white/15 hover:border-black/40 dark:hover:border-white/40 transition-all duration-200 space-y-3 group shadow-sm hover:shadow-md reveal ${p.delayClass}`}
               >
                 <div className="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   {p.icon}

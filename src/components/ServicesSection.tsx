@@ -26,6 +26,17 @@ export const ServicesSection: React.FC = () => {
     }
   };
 
+  const getDelayClass = (idx: number) => {
+    switch (idx % 2) {
+      case 0:
+        return 'reveal-delay-1';
+      case 1:
+        return 'reveal-delay-2';
+      default:
+        return '';
+    }
+  };
+
   return (
     <section
       id="services"
@@ -40,14 +51,14 @@ export const ServicesSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between reveal">
             <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
               {t.label}
             </span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
+            <div className="reveal reveal-delay-1">
               <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-black dark:text-white font-sans">
                 {t.heading} <strong className="font-extrabold underline decoration-1 underline-offset-8">{t.headingHighlight}</strong> {t.headingEnd}
               </h2>
@@ -58,7 +69,7 @@ export const ServicesSection: React.FC = () => {
 
             <a
               href="#contact"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-xs tracking-wider uppercase hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-md shrink-0 hover:scale-105 active:scale-95 group"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-xs tracking-wider uppercase hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all shadow-md shrink-0 hover:scale-105 active:scale-95 group reveal reveal-delay-2"
             >
               <span>{t.contactBtn}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -66,13 +77,13 @@ export const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Services Grid */}
+        {/* Services Grid with Staggered Scroll Reveal */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {t.list.map((service) => (
+          {t.list.map((service, idx) => (
             <div
               key={service.number}
               data-cursor="project"
-              className={`project-card group relative rounded-3xl p-7 sm:p-9 transition-all duration-300 flex flex-col justify-between space-y-6 ${
+              className={`project-card group relative rounded-3xl p-7 sm:p-9 transition-all duration-300 flex flex-col justify-between space-y-6 reveal-scale ${getDelayClass(idx)} ${
                 service.highlight
                   ? 'bg-zinc-50 dark:bg-[#0f0f12] border-2 border-black/30 dark:border-white/30 shadow-lg dark:shadow-[0_12px_40px_rgba(0,0,0,0.8)]'
                   : 'bg-zinc-50 dark:bg-zinc-900/80 border border-black/15 dark:border-white/15 hover:border-black/40 dark:hover:border-white/40 shadow-sm hover:shadow-md'
@@ -114,8 +125,8 @@ export const ServicesSection: React.FC = () => {
                 <span className="text-xs font-mono font-semibold text-zinc-500 uppercase block mb-1">
                   {t.scopeTitle}
                 </span>
-                {service.deliverables.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
+                {service.deliverables.map((item, dIdx) => (
+                  <div key={dIdx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
                     <CheckCircle2 className="w-4 h-4 text-black dark:text-white shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </div>
@@ -137,7 +148,7 @@ export const ServicesSection: React.FC = () => {
         </div>
 
         {/* Bottom Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-zinc-100 dark:bg-zinc-900 border border-black/15 dark:border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md text-center md:text-left">
+        <div className="p-8 sm:p-12 rounded-3xl bg-zinc-100 dark:bg-zinc-900 border border-black/15 dark:border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md text-center md:text-left reveal-scale">
           <div className="space-y-2">
             <h4 className="text-xl sm:text-2xl font-bold text-black dark:text-white font-sans">
               {t.ctaHeading}

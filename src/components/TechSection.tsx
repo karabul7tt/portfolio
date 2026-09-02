@@ -27,7 +27,7 @@ export const TechSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-6 sm:px-10 space-y-16">
         
         {/* Section Header */}
-        <div className="mb-4">
+        <div className="mb-4 reveal">
           <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
             {t.label}
           </span>
@@ -35,8 +35,8 @@ export const TechSection: React.FC = () => {
 
         {/* Categories Stack */}
         <div className="space-y-16">
-          {t.sections.map((sec) => (
-            <div key={sec.number} className="space-y-6">
+          {t.sections.map((sec, idx) => (
+            <div key={sec.number} className={`space-y-6 reveal ${idx > 0 ? `reveal-delay-${Math.min(idx, 3)}` : ''}`}>
               {/* Category Header with number */}
               <div className="flex items-center gap-4 text-xs font-mono tracking-widest uppercase text-zinc-600 dark:text-zinc-400">
                 <span className="text-black dark:text-white font-bold">{sec.number}</span>
