@@ -45,13 +45,18 @@ export const Navigation: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between">
-          {/* Brand Name */}
+          {/* Brand Name with Official MK Monogram */}
           <a
             href="#hero"
             onClick={() => setMenuOpen(false)}
-            className="text-lg sm:text-xl font-extrabold tracking-tighter uppercase font-sans text-black dark:text-white hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2.5 text-lg sm:text-xl font-extrabold tracking-tighter uppercase font-sans text-black dark:text-white hover:opacity-80 transition-opacity group"
           >
-            KARABULUT
+            <img
+              src="/assets/mk-logo.png"
+              alt="MK"
+              className="w-7 h-7 rounded-lg object-contain border border-black/15 dark:border-white/15 group-hover:scale-105 transition-transform"
+            />
+            <span>KARABULUT</span>
           </a>
 
           {/* Right Header Actions: Language Selector + Theme Toggle + Unified Menu Toggle */}
