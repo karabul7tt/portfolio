@@ -49,12 +49,19 @@ export const CustomCursor: React.FC = () => {
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      isVisible = true;
+
+      // If cursor was outside, snap position immediately (0 lag / no flying across screen)
+      if (!isVisible) {
+        currX = mouseX;
+        currY = mouseY;
+        isVisible = true;
+      }
+
       checkHover(mouseX, mouseY);
     };
 
     const onScroll = () => {
-      if (mouseX >= 0 && mouseY >= 0) {
+      if (mouseX >= 0 && mouseY >= 0 && isVisible) {
         checkHover(mouseX, mouseY);
       }
     };
@@ -65,17 +72,31 @@ export const CustomCursor: React.FC = () => {
     const onMouseUp = () => {
       isDown = false;
     };
-    const onMouseLeave = () => {
-      isVisible = false;
+    
+    const onMouseLeave = (e: MouseEvent) => {
+      // Check if mouse genuinely left the viewport boundary
+      if (
+        e.clientY <= 0 ||
+        e.clientX <= 0 ||
+        e.clientX >= window.innerWidth ||
+        e.clientY >= window.innerHeight
+      ) {
+        isVisible = false;
+      }
     };
-    const onMouseEnter = () => {
+
+    const onMouseEnter = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      currX = mouseX;
+      currY = mouseY;
       isVisible = true;
     };
 
     const render = () => {
-      // Direct high-precision tracking (0.5 lerp)
-      currX += (mouseX - currX) * 0.5;
-      currY += (mouseY - currY) * 0.5;
+      // High-precision smooth tracking (0.55 lerp)
+      currX += (mouseX - currX) * 0.55;
+      currY += (mouseY - currY) * 0.55;
 
       const el = cursorRef.current;
       if (el) {
@@ -85,7 +106,7 @@ export const CustomCursor: React.FC = () => {
         // Default: 1.0 (14px)
         // Clicked: 0.75
         // Button/Link: 1.8 (25px)
-        // Card/Box: 2.8 (40px generous smooth expanding ball)
+        // Card/Box: 2.8 (40px smooth expanding spotlight)
         const scale = isDown
           ? 0.75
           : hoverType === 'card'
@@ -123,10 +144,10 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[99999] hidden md:block overflow-hidden">
-      {/* Kutuların Üzerine Gelince Büyüyen Şık Top İmleç */}
+      {/* Kusursuz Entegre, Sınır Tanıyan Şık Top İmleç */}
       <div
         ref={cursorRef}
-        className="fixed w-3.5 h-3.5 rounded-full pointer-events-none opacity-0 will-change-transform shadow-md transition-[transform,background-color] duration-200 ease-out"
+        className="fixed w-3.5 h-3.5 rounded-full pointer-events-none opacity-0 will-change-transform shadow-md transition-[opacity,transform,background-color] duration-150 ease-out"
         style={{ left: 0, top: 0 }}
       />
     </div>
