@@ -15,14 +15,35 @@ export const CustomCursor: React.FC = () => {
     let mouseY = -100;
     let currX = -100;
     let currY = -100;
-    let isHovered = false;
+    let hoverType: 'none' | 'button' | 'card' = 'none';
     let isDown = false;
     let isVisible = false;
     let animId: number;
 
     const checkHover = (x: number, y: number) => {
       const target = document.elementFromPoint(x, y);
-      isHovered = !!target?.closest('a, button, [role="button"], input, textarea, select, [data-cursor="project"]');
+      if (!target) {
+        hoverType = 'none';
+        return;
+      }
+
+      // Check if hovering over buttons, links, controls
+      if (target.closest('a, button, [role="button"], input, textarea, select')) {
+        hoverType = 'button';
+        return;
+      }
+
+      // Check if hovering over boxes/cards (Services, About boxes, Photo cards, Tech pills, etc.)
+      if (
+        target.closest(
+          '.project-card, .photo-card, [data-cursor], .rounded-3xl, .rounded-2xl, .rounded-xl, .shadow-md, .shadow-lg'
+        )
+      ) {
+        hoverType = 'card';
+        return;
+      }
+
+      hoverType = 'none';
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -52,15 +73,26 @@ export const CustomCursor: React.FC = () => {
     };
 
     const render = () => {
-      // 0.55 direct smooth tracking without delay
-      currX += (mouseX - currX) * 0.55;
-      currY += (mouseY - currY) * 0.55;
+      // Direct high-precision tracking (0.5 lerp)
+      currX += (mouseX - currX) * 0.5;
+      currY += (mouseY - currY) * 0.5;
 
       const el = cursorRef.current;
       if (el) {
         const isLight = themeRef.current === 'light';
-        // Always maintains the elegant solid ball shape
-        const scale = isDown ? 0.75 : isHovered ? 1.6 : 1.0;
+        
+        // Scale values:
+        // Default: 1.0 (14px)
+        // Clicked: 0.75
+        // Button/Link: 1.8 (25px)
+        // Card/Box: 2.8 (40px generous smooth expanding ball)
+        const scale = isDown
+          ? 0.75
+          : hoverType === 'card'
+          ? 2.8
+          : hoverType === 'button'
+          ? 1.8
+          : 1.0;
 
         el.style.transform = `translate3d(${currX}px, ${currY}px, 0) translate(-50%, -50%) scale(${scale})`;
         el.style.opacity = isVisible ? '1' : '0';
@@ -91,10 +123,10 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[99999] hidden md:block overflow-hidden">
-      {/* Sabit ve Düzgün Top Şeklinde Özel İmleç */}
+      {/* Kutuların Üzerine Gelince Büyüyen Şık Top İmleç */}
       <div
         ref={cursorRef}
-        className="fixed w-3.5 h-3.5 rounded-full pointer-events-none opacity-0 will-change-transform shadow-sm transition-[transform,background-color] duration-150 ease-out"
+        className="fixed w-3.5 h-3.5 rounded-full pointer-events-none opacity-0 will-change-transform shadow-md transition-[transform,background-color] duration-200 ease-out"
         style={{ left: 0, top: 0 }}
       />
     </div>
