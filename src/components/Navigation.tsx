@@ -75,22 +75,17 @@ export const Navigation: React.FC = () => {
               ))}
             </div>
 
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button - Pure Universal Icon */}
             <button
               onClick={toggleTheme}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-black/15 dark:border-white/15 text-black dark:text-white transition-all flex items-center gap-2 text-xs font-mono font-medium"
+              className="p-2 sm:p-2.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-black/15 dark:border-white/15 text-black dark:text-white transition-all flex items-center justify-center shadow-sm hover:scale-105 active:scale-95"
+              aria-label="Tema Değiştir / Toggle Theme"
               title={theme === 'dark' ? t.lightTheme : t.darkTheme}
             >
               {theme === 'dark' ? (
-                <>
-                  <Sun className="w-4 h-4 text-white" />
-                  <span className="hidden sm:inline">{t.lightTheme}</span>
-                </>
+                <Sun className="w-4 h-4 text-white" />
               ) : (
-                <>
-                  <Moon className="w-4 h-4 text-black" />
-                  <span className="hidden sm:inline">{t.darkTheme}</span>
-                </>
+                <Moon className="w-4 h-4 text-black" />
               )}
             </button>
 
