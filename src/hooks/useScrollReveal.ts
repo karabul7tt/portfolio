@@ -5,7 +5,7 @@ export const useScrollReveal = () => {
   const { lang } = useLanguage();
 
   useEffect(() => {
-    // Check if IntersectionObserver is supported
+    // Fallback if IntersectionObserver is not supported
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => {
         el.classList.add('revealed');
@@ -13,29 +13,31 @@ export const useScrollReveal = () => {
       return;
     }
 
-    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
+    const observerCallback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          // Sayfa o alana gelince animasyonu başlat
           entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
+        } else {
+          // Sayfadan çıkınca sıfırla ki yukarı/aşağı kaydırırken her seferinde tekrar oynasın
+          entry.target.classList.remove('revealed');
         }
       });
     };
 
     const observer = new IntersectionObserver(observerCallback, {
       root: null,
-      rootMargin: '0px 0px -50px 0px',
+      rootMargin: '0px 0px -30px 0px',
       threshold: 0.08,
     });
 
-    // Observe immediately and also after slight delay for dynamic renders
     const observeElements = () => {
-      const elements = document.querySelectorAll('.reveal:not(.revealed), .reveal-scale:not(.revealed)');
+      const elements = document.querySelectorAll('.reveal, .reveal-scale');
       elements.forEach((el) => observer.observe(el));
     };
 
     observeElements();
-    const timeout = setTimeout(observeElements, 100);
+    const timeout = setTimeout(observeElements, 150);
 
     return () => {
       clearTimeout(timeout);
