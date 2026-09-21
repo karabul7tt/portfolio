@@ -12,7 +12,7 @@ Kişisel web sitemin kaynak kodları.
 - Tailwind CSS
 
 ## 📬 İletişim
-- **E-posta:** karabulutmehmet686@gmail.com
+- **E-posta:** mehmetkarabul7tt@gmail.com
 - **GitHub:** [karabul7tt](https://github.com/karabul7tt)
 - **Instagram:** [@mehmetkarabul7tt](https://instagram.com/mehmetkarabul7tt)
 - **LinkedIn:** [Mehmet Karabulut](https://www.linkedin.com/in/mehmetkarabul7tt/)

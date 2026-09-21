@@ -54,7 +54,7 @@ export const PORTFOLIO_DATA = {
     gpa: "3.20",
     clubRole: "Yazılım, Yapay Zeka ve Yaratıcılık Kulübü — Sosyal Medya Sorumlusu",
     phone: "+90 534 784 34 84",
-    email: "karabulutmehmet686@gmail.com",
+    email: "mehmetkarabul7tt@gmail.com",
     location: "İstanbul, Türkiye",
     github: "https://github.com/karabul7tt",
     instagram: "https://instagram.com/mehmetkarabul7tt",
@@ -119,6 +119,24 @@ export const PORTFOLIO_DATA = {
     },
   ] as SkillCategory[],
   projects: [
+    {
+      id: "echo-protocol",
+      title: "ECHO PROTOCOL: 3D Time-Paradox",
+      description: "Deterministik replay buffer ve alt-kare enterpolasyonu ile geçmiş hayalet klonlarınızla eş zamanlı taktiksel sızma operasyonu yürüttüğünüz 3D WebGL zaman döngüsü oyunu.",
+      category: "Game Dev & 3D",
+      tags: ["Three.js", "WebGL", "Game Loop", "FSM AI", "Object Pooling", "Web Audio API"],
+      githubUrl: "https://github.com/karabul7tt/echo-protocol",
+      liveUrl: "/demos/echo-protocol/index.html",
+      deploymentStatus: "Ready",
+      featured: true,
+      threeDType: "hologram",
+      primaryColor: "#00f0ff",
+      secondaryColor: "#00ff88",
+      metrics: [
+        { label: "Mimari", value: "Replay Buffer" },
+        { label: "Performans", value: "60 FPS (Zero-GC)" },
+      ],
+    },
     {
       id: "figume-3d",
       title: "FiguME-3D",
