@@ -53,8 +53,8 @@ export const ContactSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Minimalist Contact Grid Rows */}
-        <div className="space-y-12">
+        {/* Minimalist Contact Grid Rows - Blocked from Google search snippets */}
+        <div data-nosnippet className="space-y-12">
           
           {/* Row 1: E-POSTA */}
           <div className="pt-8 border-t border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline justify-between gap-4 group reveal reveal-delay-1">
