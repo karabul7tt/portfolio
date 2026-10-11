@@ -72,12 +72,13 @@ export const ContactSection: React.FC = () => {
                 {email}
               </a>
               <button
+                data-nosnippet
                 onClick={handleCopyEmail}
                 className="p-2.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-black/15 dark:border-white/15 text-black dark:text-white transition-all text-xs font-mono flex items-center gap-1.5 shrink-0"
                 title={t.copyBtn}
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedEmail ? t.copiedBtn : t.copyBtn}</span>
+                <span data-nosnippet>{copiedEmail ? t.copiedBtn : t.copyBtn}</span>
               </button>
             </div>
           </div>
@@ -98,12 +99,13 @@ export const ContactSection: React.FC = () => {
                 {phone}
               </a>
               <button
+                data-nosnippet
                 onClick={handleCopyPhone}
                 className="p-2.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-black/15 dark:border-white/15 text-black dark:text-white transition-all text-xs font-mono flex items-center gap-1.5 shrink-0"
                 title={t.copyBtn}
               >
                 {copiedPhone ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedPhone ? t.copiedBtn : t.copyBtn}</span>
+                <span data-nosnippet>{copiedPhone ? t.copiedBtn : t.copyBtn}</span>
               </button>
             </div>
           </div>
